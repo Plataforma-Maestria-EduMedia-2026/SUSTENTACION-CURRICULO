@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es" data-theme="light">
   <head>
     <meta charset="utf-8" />
@@ -222,7 +222,7 @@
       .inf {
         list-style: none;
         display: grid;
-        gap: 11px;
+        gap: 8px;
         margin-left: 4px;
       }
       .inf li {
@@ -243,11 +243,11 @@
       }
       .side q {
         display: block;
-        margin: 18px 4px;
+        margin: 12px 4px;
         font-style: italic;
         color: var(--mut);
-        font-size: 13px;
-        line-height: 1.55;
+        font-size: 12.5px;
+        line-height: 1.45;
       }
       .nav {
         margin-top: auto;
@@ -410,41 +410,54 @@
         z-index: 2;
       }
       .eb {
-        letter-spacing: 2px;
-        font-size: 17px;
+        letter-spacing: 1.5px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #9fb3dd;
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
+        text-transform: uppercase;
       }
       .eb:after {
         content: "";
-        width: 44px;
+        width: 36px;
         height: 2px;
         background: #38a8ff;
       }
       .hero h1 {
-        font-size: clamp(28px, 3.6vw, 46px);
-        line-height: 1.12;
-        margin: 14px 0 20px;
+        font-size: clamp(20px, 2.4vw, 34px);
+        line-height: 1.15;
+        margin: 8px 0 10px;
         font-weight: 700;
+        letter-spacing: -0.015em;
       }
       .hero h2 {
-        font-size: 22px;
+        font-size: clamp(13px, 1.2vw, 16px);
         font-weight: 600;
+        color: #dbe7ff;
+        line-height: 1.35;
+        margin: 0 0 8px;
       }
       .hero p {
-        font-size: 17px;
-        opacity: 0.9;
-        margin-top: 2px;
+        font-size: 13px;
+        opacity: 0.95;
+        line-height: 1.45;
+        color: #b9cdf5;
+        margin: 0;
+      }
+      .hero p b {
+        color: #fff;
       }
       .scr {
         position: absolute !important;
-        right: 44px;
-        bottom: 98px;
+        right: 36px;
+        bottom: 22px;
         font:
-          500 36px Caveat,
+          500 30px Caveat,
           cursive;
-        transform: rotate(-8deg);
+        transform: rotate(-6deg);
+        pointer-events: none;
       }
       .scr svg {
         display: block;
@@ -455,18 +468,22 @@
       }
       .ft2 {
         position: absolute !important;
-        left: 190px;
-        bottom: 22px;
-        font-size: 13px;
+        left: 124px;
+        bottom: 16px;
+        font-size: 12px;
         display: flex;
         align-items: center;
-        gap: 20px;
-        max-width: 300px;
+        gap: 14px;
+        color: #9fb3dd;
+        max-width: calc(100% - 280px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .ft2:before {
         content: "";
-        width: 46px;
-        height: 3px;
+        width: 34px;
+        height: 2px;
         background: #38a8ff;
         flex: none;
       }
@@ -1855,7 +1872,8 @@
       }
       .sl0 .slstage.final {
         border-color: var(--acc, #0d9488);
-        background: linear-gradient(
+        background:
+          linear-gradient(
             180deg,
             color-mix(in srgb, var(--acc, #0d9488) 10%, transparent),
             transparent 65%
@@ -1930,11 +1948,8 @@
       .sl0 .slcbox.no {
         border-color: rgba(229, 72, 77, 0.45);
         border-left: 0.28em solid #e5484d;
-        background: linear-gradient(
-            180deg,
-            rgba(229, 72, 77, 0.06),
-            transparent 70%
-          ),
+        background:
+          linear-gradient(180deg, rgba(229, 72, 77, 0.06), transparent 70%),
           var(--card);
       }
       .sl0 .slcbox.no b {
@@ -1949,11 +1964,8 @@
       .sl0 .slcbox.yes {
         border-color: rgba(47, 158, 99, 0.45);
         border-left: 0.28em solid #2f9e63;
-        background: linear-gradient(
-            180deg,
-            rgba(47, 158, 99, 0.06),
-            transparent 70%
-          ),
+        background:
+          linear-gradient(180deg, rgba(47, 158, 99, 0.06), transparent 70%),
           var(--card);
       }
       .sl0 .slcbox.yes b {
@@ -2121,10 +2133,10 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 20px 20px 60px 124px;
+          padding: 20px 20px 52px 124px;
         }
         .hero h1 {
-          font-size: clamp(26px, min(3.6vw, 5.2vh), 50px);
+          font-size: clamp(20px, min(2.5vw, 4vh), 34px);
         }
         .res {
           align-self: stretch;
@@ -2199,46 +2211,70 @@
               <div class="bar"><i id="pb"></i></div>
               <strong id="pc"></strong><small id="pt"></small>
             </div>
-            <div class="card sx">
-              <svg class="i" style="color: #4aa3ff"><use href="#user" /></svg
-              ><span>Participantes</span><b>125</b>
+            <div
+              class="card sx"
+              title="Participantes en el proceso de sustentación"
+            >
+              <svg class="i" style="color: #38a8ff"><use href="#user" /></svg>
+              <span>Participantes</span><b>125</b>
             </div>
-            <div class="card sx">
-              <svg class="i" style="color: #3b82f6"><use href="#doc" /></svg
-              ><span>Recursos</span><b>6</b>
+            <div
+              class="card sx"
+              title="Recursos disponibles en la presentación"
+            >
+              <svg class="i" style="color: #0284c7"><use href="#doc" /></svg>
+              <span>Recursos</span><b>6</b>
             </div>
-            <div class="card sx">
-              <svg class="i" style="color: #19e0b0"><use href="#chart" /></svg
-              ><span>Resultados</span><b>92%</b>
+            <div
+              class="card sx"
+              title="Resultados obtenidos en el proceso de evaluación"
+            >
+              <svg class="i" style="color: #10b981"><use href="#chart" /></svg>
+              <span>Resultados</span><b>92%</b>
             </div>
-            <div class="card sx">
-              <svg class="i" style="color: #19e0b0"><use href="#target" /></svg
-              ><span>Impacto</span><b>Alto</b>
+            <div
+              class="card sx"
+              title="Nivel de impacto del proyecto curricular"
+            >
+              <svg class="i" style="color: #14b8a6"><use href="#target" /></svg>
+              <span>Impacto</span><b>Alto</b>
             </div>
           </div>
           <div class="g2" id="g2">
             <div class="hero">
               <div class="lp"></div>
-              <i class="bk" style="bottom: 150px; width: 210px"></i
-              ><i class="bk" style="bottom: 100px; width: 250px"></i
-              ><i class="bk" style="bottom: 50px; width: 230px"></i>
-              <div class="eb">Universidad EAN</div>
-              <h1>Gestión Curricular<br />en Ambientes Virtuales</h1>
-              <h2>Sustentación de Trabajo de Grado</h2>
-              <p>Maestría en Innovación Educativa &nbsp;|&nbsp; 2026</p>
+              <i class="bk" style="bottom: 150px; width: 210px"></i>
+              <i class="bk" style="bottom: 100px; width: 250px"></i>
+              <i class="bk" style="bottom: 50px; width: 230px"></i>
+              <div class="eb">
+                Universidad EAN &nbsp;·&nbsp; Facultad de Ciencias Humanas y
+                Sociales
+              </div>
+              <h1>Encuentro Final:<br />Entrega de la Propuesta Curricular</h1>
+              <h2>
+                Diseño Tecnopedagógico Integrado en Modalidad Blended Learning
+                para la Educación Media Técnica
+              </h2>
+              <p>
+                <b>Caso:</b> Colegio Instituto Técnico Industrial Francisco José
+                de Caldas (IED)<br /><b>Expositor:</b> Óscar Javier Murcia
+                Hernández &nbsp;·&nbsp; <b>Profesor:</b> Juan Manuel Medina
+                Barrera &nbsp;·&nbsp; <b>Asignatura:</b> Gestión curricular en
+                ambientes virtuales
+              </p>
               <div class="scr">
-                Ideas<br />que transforman<svg
-                  width="190"
-                  height="14"
-                  viewBox="0 0 190 14"
-                >
+                Ideas<br />que transforman
+                <svg width="190" height="14" viewBox="0 0 190 14">
                   <path d="M4 11C60 3 130 4 186 2" />
                 </svg>
               </div>
               <div class="ft2">
-                Innovación educativa para un futuro sin límites
+                Programa de Maestría en Gestión de la Educación Virtual
+                &nbsp;·&nbsp; Bogotá D.C., Colombia &nbsp;·&nbsp; 31 de octubre
+                de 2026
               </div>
             </div>
+
             <aside class="card res">
               <h3 data-i="doc">Recursos Clave</h3>
               <p>Selecciona un recurso para abrir en pantalla completa.</p>
@@ -2633,22 +2669,76 @@
           "share",
           "Coordinación y sostenibilidad",
           6,
-          "#19b37a",
+          "#059669",
           [
-            "Actores y participación real en las decisiones.",
-            "Mecanismo de coordinación con actas e indicadores.",
-            "Producto: invariantes, umbrales y regla de ajuste.",
+            {
+              t: "Mapa de actores curriculares y mecanismo concreto de coordinación",
+              acc: "#059669",
+              h: `<div class="slbox" style="--acc:#059669;border-left-color:#059669"><b>Gobernanza y sostenibilidad curricular (Glatthorn, Boschee & Whitehead, 2015; Fullan, 2013):</b> La sostenibilidad no depende de la formulación inicial en el papel sino de la calidad de las relaciones y decisiones entre los actores que la sostienen. En el ITI Caldas, la propuesta supera la fragmentación tradicional articulando a los actores del aula presencial con los órganos del Gobierno Escolar y la infraestructura tecnológica.</div>
+<div class="slmx two">
+<div class="slcell" style="--acc:#059669"><span class="sltag" style="--acc:#059669">Actores y funciones en la propuesta</span><ul style="padding-left:1.05em"><li><b>Docentes de Filosofía:</b> Diseñan las mediaciones dialógicas (TPACK), guían la presencia docente/cognitiva en aula y aula virtual, y aplican rúbricas formativas.</li><li><b>Jefe de Área de Ciencias Sociales:</b> Lidera la articulación curricular, convoca comités de corte, consolida insumos estudiantiles y formaliza el plan de área.</li><li><b>Docentes de Tecnología y Soporte:</b> Aseguran la viabilidad de herramientas ligeras (&lt; 1 MB), gestionan entornos asincrónicos y mitigan fallas técnicas.</li><li><b>Comité Escolar de Convivencia:</b> Vela por la ética digital, la ciberseguridad, el respeto dialógico en foros/pódcasts y previene el ciberacoso (Ley 1620 de 2013).</li><li><b>Consejo Académico y Directivo:</b> El Académico aprueba flexibilizaciones por evidencia; el Directivo adopta el aula virtual en el PEI y garantiza recursos institucionales.</li><li><b>Estudiantes (Propuesta e insumos):</b> Aportan trazabilidad mediante coevaluación en pares, autoevaluación reflexiva y retroalimentación de carga.</li></ul></div>
+<div class="slcell" style="--acc:#059669"><span class="sltag" style="--acc:#059669">Mecanismo concreto de coordinación</span><ul style="padding-left:1.05em"><li><b>Quién convoca:</b> Jefatura de Área de Ciencias Sociales y Coordinación Académica.</li><li><b>Cuándo (3 momentos clave del periodo):</b><br>• <i>Semana 1 (Inicio):</i> Instalación de acuerdos tecnopedagógicos, socialización de rúbricas analíticas y diagnóstico de acceso digital.<br>• <i>Semana 8 (Corte intermedio):</i> Lectura de analítica del aula virtual, alertas tempranas de rezago y andamiaje formativo preventivo.<br>• <i>Semana 16 (Cierre):</i> Balance de resultados de aprendizaje, triangulación de evidencias y formalización de mejoras curriculares.</li><li><b>Con qué datos:</b> Trazabilidad de entregas intermedias en aula virtual, tasas de descarga móvil, rúbricas de desempeño y actas de coevaluación.</li><li><b>Qué deciden:</b> Ajustes a tiempos y andamiajes sin rebajar el logro, planes de apoyo preventivos y actualización formal del plan de estudios.</li></ul></div>
+</div>
+<div class="slband" style="--acc:#059669;border-left-color:#059669;font-size:0.73em;padding:0.45em 0.85em"><b>Formalización curricular institucional:</b> La coordinación asegura que las mediaciones tecnopedagógicas y el concepto de aula virtual dejen de ser iniciativas aisladas de aula y se formalicen como propuesta oficial del Área de Ciencias Sociales ante el Consejo Académico y el Consejo Directivo (Glatthorn et al., 2015; Fullan, 2013).</div>
+<p class="slsrc">Fuentes y fundamentación: Ley 115 de 1994 (Gobierno Escolar) · Decreto 1860 de 1994 · Manual de Convivencia ITI Caldas (2025, Cap. VIII) · SIEE (2025, Ac. 005) · Gobernanza curricular (Glatthorn, Boschee & Whitehead, 2015).</p>`,
+            },
+            {
+              t: "Situaciones de ajuste, núcleo innegociable y regla de sostenibilidad",
+              acc: "#059669",
+              h: `<div class="slmx two">
+<div class="slcell" style="--acc:#059669"><span class="sltag" style="--acc:#059669">Ajuste 1 · Brecha digital y sobrecarga virtual</span><ul style="padding-left:1.05em"><li><b>Evidencia que la señala:</b> Concentración de entregas tardías al límite de fecha, mensajes de estudiantes reportando falta de datos móviles (estratos 1–3) y caída de participación asincrónica en la Etapa 3.</li><li><b>Foco del ajuste (Recursos y tiempos):</b> Priorización estricta de formatos asincrónicos livianos (notas de voz y fichas en texto plano de &lt; 1 MB), ventanas flexibles de entrega sin penalización punitiva y descarga offline durante la jornada presencial en salas de informática del ITI.</li><li><b>Lo que se preserva:</b> El nivel cognitivo del logro y la exigencia del argumento crítico; se adapta el canal de entrega, jamás la calidad del aprendizaje.</li></ul></div>
+<div class="slcell" style="--acc:#059669"><span class="sltag" style="--acc:#059669">Ajuste 2 · Trivialización o copia en deliberación</span><ul style="padding-left:1.05em"><li><b>Evidencia que la señala:</b> Respuestas genéricas o guiones calcados de internet/IA generativa, ausencia de réplica reflexiva frente al argumento del par en el pódcast, y contradicción entre el texto escrito y la sustentación oral.</li><li><b>Foco del ajuste (Estrategias y andamiaje):</b> Reconfiguración de las consignas hacia dilemas éticos situados con datos incompletos, intensificación del modelado socrático docente en clase presencial y exigencia de sustentación en vivo (panel) con preguntas imprevistas.</li><li><b>Lo que se preserva:</b> La producción dialógica auténtica; se desincentiva la mecanización y se refuerza la deliberación reflexiva en tiempo real.</li></ul></div>
+</div>
+<div class="slbox" style="--acc:#059669;border-left-color:#059669;font-size:0.73em;padding:0.45em 0.85em;margin-bottom:0.4em"><b>Lo innegociable del diseño (Núcleo invariante):</b> <b>1)</b> <i>Alineamiento constructivo:</i> los 3 RAs y sus evidencias auténticas (ensayo, pódcast, panel) no se negocian ni se reemplazan por exámenes memorísticos. <b>2)</b> <i>Dependencia estricta de artefactos:</i> cada etapa consume el insumo de la anterior (Etapa 2 consume Ficha de Etapa 1; Etapa 3 consume Pódcast de Etapa 2). <b>3)</b> <i>Sistema SIEE:</i> reparto inamovible 80/10/10 y valoración del SER desde el perfil de estudiante (Indagadores, Pensadores, Reflexivos, Íntegros).</div>
+<div class="slband" style="--acc:#059669;border-left-color:#059669;font-size:0.73em;padding:0.45em 0.85em"><b>Seguimiento y sostenibilidad institucional (Fullan, 2013; Stenhouse, 1984):</b> El seguimiento se institucionaliza a través de: <b>a)</b> Libro de actas de decisiones curriculares del área con carácter vinculante; <b>b)</b> Informes de trazabilidad tecnopedagógica al Consejo Académico al cierre de cada corte; y <b>c)</b> Formalización del uso del aula virtual como propuesta oficial incorporada al PEI mediante acuerdo del Consejo Directivo.</div>
+<p class="slsrc">Fundamentación: Sostenibilidad del cambio educativo (Fullan, 2013) · Gobernanza curricular (Glatthorn, Boschee & Whitehead, 2015) · Investigación curricular desde la práctica (Stenhouse, 1984) · PEI y SIEE ITI Caldas (2025).</p>`,
+            },
           ],
         ],
         [
           "book",
           "Fundamentación integrada",
           5,
-          "#f59e0b",
+          "#d97706",
           [
-            "Referentes teóricos, normativos e institucionales.",
-            "Trazabilidad de cada decisión curricular.",
-            "Producto: verificación de coherencia y entrega.",
+            {
+              t: "Trazabilidad de decisiones curriculares: argumentos teóricos y contextuales",
+              acc: "#d97706",
+              h: `<div class="slbox" style="--acc:#d97706;border-left-color:#d97706"><b>Consistencia y calidad del diseño curricular (Wiggins & McTighe, 2005; Sunberg, 2022):</b> La fundamentación integrada no es una recopilación pasiva de citas, sino la prueba de consistencia que demuestra que cada decisión pedagógica, tecnológica y organizativa responde simétricamente a un fundamento teórico validado y a una necesidad contextual del ITI Caldas.</div>
+<div class="slmx two">
+<div class="slcell" style="--acc:#d97706"><span class="sltag" style="--acc:#d97706">Decisión 1 · Modelo Práctico de Competencias</span><ul style="padding-left:1.05em"><li><b>Argumento teórico:</b> Praxis curricular crítica (Grundy, 1987) y tareas situadas (Ellis, 2003): los conceptos filosóficos no preceden a la acción, sino que emergen de la resolución de dilemas ético-políticos contemporáneos.</li><li><b>Argumento contextual ITI:</b> Conexión orgánica con la vocación técnica de taller (10 h/sem) y la sustentación de grado de la semana iteísta; supera el enfoque memorístico descontextualizado.</li></ul></div>
+<div class="slcell" style="--acc:#d97706"><span class="sltag" style="--acc:#d97706">Decisión 2 · Mediación B-Learning de Bajo Consumo</span><ul style="padding-left:1.05em"><li><b>Argumento teórico:</b> Modelo TPACK (Mishra & Koehler, 2006; León Naranjo, 2024) y Comunidad de Indagación CoI (Garrison, Anderson & Archer, 2000): presencia cognitiva, social y docente andamiada.</li><li><b>Argumento contextual ITI:</b> Mitigación real de la brecha digital en estratos 1–3 mediante formatos ligeros (&lt; 1 MB), asincronía flexible y descarga offline en salas presenciales de informática.</li></ul></div>
+</div>
+<div class="slmx two">
+<div class="slcell" style="--acc:#d97706"><span class="sltag" style="--acc:#d97706">Decisión 3 · Sistema de Evaluación Integral</span><ul style="padding-left:1.05em"><li><b>Argumento teórico:</b> Alineamiento constructivo (Biggs & Tang, 2011) y rúbricas analíticas transparentes: la evidencia auténtica precede a la actividad para evitar sub-medir el juicio crítico.</li><li><b>Argumento contextual ITI:</b> Armonización con el SIEE 2025 (reparto 80% hetero / 10% co / 10% auto) y valoración de la dimensión del SER desde el perfil de estudiante (Indagadores, Pensadores, Reflexivos).</li></ul></div>
+<div class="slcell" style="--acc:#d97706"><span class="sltag" style="--acc:#d97706">Decisión 4 · Gobernanza Curricular Colegiada</span><ul style="padding-left:1.05em"><li><b>Argumento teórico:</b> Liderazgo y gobernanza curricular (Glatthorn, Boschee & Whitehead, 2015) y sostenibilidad del cambio educativo (Fullan, 2013): toma de decisiones vinculante basada en evidencia.</li><li><b>Argumento contextual ITI:</b> Superación de la fragmentación tradicional articulando a Filosofía, Ciencias Sociales, Tecnología, Convivencia, Consejo Académico y Consejo Directivo.</li></ul></div>
+</div>
+<div class="slband" style="--acc:#d97706;border-left-color:#d97706;font-size:0.73em;padding:0.45em 0.85em"><b>Criterio de calidad y coherencia sistémica:</b> «Lo que se promete aprender en el propósito formativo, se entrena exactamente en la mediación tecnopedagógica y se verifica con fidelidad en la rúbrica analítica» (Biggs & Tang, 2011; Sunberg, 2022).</div>
+<p class="slsrc">Fuentes y fundamentación: Grundy (1987) · Biggs & Tang (2011) · Mishra & Koehler (2006) · Glatthorn et al. (2015) · SIEE (2025) · PEI ITI Caldas (2025).</p>`,
+            },
+            {
+              t: "Corpus de referencias teóricas, normativas e institucionales (APA 7.ª ed.)",
+              acc: "#d97706",
+              h: `<div class="slbox" style="--acc:#d97706;border-left-color:#d97706"><b>Rigor académico, trazabilidad y atribución (Normas APA 7.ª edición):</b> Referencias completas en estricto orden alfabético, sangría francesa, conector «y» para fuentes en español y atribución precisa de los referentes teóricos del curso y normativo-institucionales del ITI Caldas.</div>
+<div class="slapa">
+<div class="slaparef"><b>Arauz Rodríguez, M. C. (2023).</b> Taxonomía revisada de Bloom como apoyo para la redacción de resultados de aprendizaje y el alineamiento constructivo. <i>Revista Calidad en la Educación Superior</i>, 14(1), 140–165.</div>
+<div class="slaparef"><b>Biggs, J. y Tang, C. (2011).</b> <i>Teaching for quality learning at university</i> (4.ª ed.). Open University Press.</div>
+<div class="slaparef"><b>Churches, A. (2008).</b> <i>Bloom’s digital taxonomy</i>. Educational Origami.</div>
+<div class="slaparef"><b>Clark, R. E., Kirschner, P. A. y Sweller, J. (2022).</b> Efficiency in learning: Evidence-based guidelines to manage cognitive load. <i>Educational Psychology Review</i>, 34(2), 781–812.</div>
+<div class="slaparef"><b>Colegio ITI Francisco José de Caldas. (2025a).</b> <i>Manual de convivencia institucional: Un pacto para convivir y construir cultura de paz</i> (Acuerdo 004 de 2025).</div>
+<div class="slaparef"><b>Colegio ITI Francisco José de Caldas. (2025b).</b> <i>Sistema institucional de evaluación de los estudiantes – SIEE</i> (Acuerdo 005 de 2025).</div>
+<div class="slaparef"><b>Fullan, M. (2013).</b> <i>The new meaning of educational change</i> (4.ª ed.). Teachers College Press.</div>
+<div class="slaparef"><b>Garrison, D. R., Anderson, T. y Archer, W. (2000).</b> Critical inquiry in a text-based environment: Computer conferencing in higher education. <i>The Internet and Higher Education</i>, 2(2-3), 87–105.</div>
+<div class="slaparef"><b>Gimeno Sacristán, J. (2008).</b> <i>El currículum: una reflexión sobre la práctica</i> (9.ª ed.). Morata.</div>
+<div class="slaparef"><b>Glatthorn, A. A., Boschee, F. y Whitehead, B. M. (2015).</b> <i>Curriculum leadership: Strategies for development and implementation</i> (3.ª ed.). SAGE.</div>
+<div class="slaparef"><b>Grundy, S. (1987).</b> <i>Curriculum: Product or praxis?</i> The Falmer Press.</div>
+<div class="slaparef"><b>Jerez Yáñez, O. (2012).</b> <i>Los resultados de aprendizaje en la Educación Superior por competencias</i> [Tesis doctoral, Universidad de Granada]. Repositorio Institucional UGR.</div>
+<div class="slaparef"><b>Mishra, P. y Koehler, M. J. (2006).</b> Technological pedagogical content knowledge: A framework for teacher knowledge. <i>Teachers College Record</i>, 108(6), 1017–1054.</div>
+<div class="slaparef"><b>Sunberg, D. (2022).</b> Coherencia curricular. En <i>Equidad, práctica docente y currículo</i> (pp. 76–89).</div>
+</div>
+<div class="slband" style="--acc:#d97706;border-left-color:#d97706;font-size:0.73em;padding:0.45em 0.85em"><b>Límites reconocidos y formalización de la entrega:</b> La propuesta se entrega como un diseño curricular tecnopedagógico validado documentalmente; el pilotaje empírico y su adopción formal ante el Consejo Directivo constituye la siguiente fase para transformar las prácticas emergentes del aula en currículo oficial incorporado al PEI.</div>
+<p class="slsrc">Acreditación y formalización académica: Maestría en Gestión Curricular en Ambientes Virtuales · Universidad EAN · Bogotá D.C., 2026.</p>`,
+            },
           ],
         ],
         [
@@ -2657,9 +2747,80 @@
           4,
           "#ef6b8a",
           [
-            "Revisión de rupturas entre propósito, resultados y evidencia.",
-            "Límites: diseño no pilotado y validación pendiente.",
-            "Cierre y conversación con la tutoría.",
+            {
+              t: "Diez verificaciones de la propuesta: lista de chequeo",
+              acc: "#10b981",
+              h: `<div class="sllead">Lista de verificación exhaustiva previa a la entrega final, constatando el cumplimiento estricto de forma y fondo conforme a los criterios institucionales:</div>
+<div class="slmx two" style="margin-top:0.8em; gap:1.2em;">
+  <div class="slcol" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(80,130,255,0.3); border-radius:12px; padding:1.2em;">
+    <h4 style="color:#60a5fa; margin:0 0 0.8em; font-size:1.15em; display:flex; align-items:center; gap:8px;">
+      <span style="background:#2563eb; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px;">✓</span>
+      Criterios de Forma (Estructura Editorial)
+    </h4>
+    <ul class="slul" style="line-height:1.7; font-size:0.95em;">
+      <li><b>PDF de 4 a 6 páginas:</b> Documento ejecutivo formalizado en exactamente 6 páginas bajo normas APA 7.ª edición.</li>
+      <li><b>Siete componentes en orden:</b> Coherencia y secuencia lógica desde contexto hasta fundamentación integrada.</li>
+      <li><b>Mismo contexto del Umbral Origen:</b> Fiel reflejo del Colegio ITI Francisco José de Caldas (Engativá).</li>
+      <li><b>Legible sin conocer las bitácoras:</b> Argumentación autónoma, fluida y comprensible para un evaluador externo.</li>
+      <li><b>Nombres del equipo y asignatura real intervenida:</b> Lic. Óscar Javier Murcia Hernández · Filosofía en Media Técnica.</li>
+    </ul>
+  </div>
+  <div class="slcol" style="background:rgba(255,255,255,0.04); border:1.5px solid rgba(16,185,129,0.3); border-radius:12px; padding:1.2em;">
+    <h4 style="color:#34d399; margin:0 0 0.8em; font-size:1.15em; display:flex; align-items:center; gap:8px;">
+      <span style="background:#059669; color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px;">✓</span>
+      Criterios de Fondo (Solidez Curricular)
+    </h4>
+    <ul class="slul" style="line-height:1.7; font-size:0.95em;">
+      <li><b>Al menos tres resultados con qué, nivel y evidencia:</b> RA1 (Analizar - Bloom 4), RA2 (Argumentar - Bloom 5) y RA3 (Evaluar - Bloom 6).</li>
+      <li><b>Tres etapas con dependencias visibles:</b> Indagación → Producción → Desempeño (dependencia estricta de artefactos acumulativos).</li>
+      <li><b>Evaluación verificada:</b> Articulación directa con el SIEE institucional (reparto 80/10/10 y dimensiones SER, SABER, HACER).</li>
+      <li><b>Dos ajustes anticipados con su disparador:</b> Brecha digital (formato asincrónico ultraliviano) e IA/superficialidad (panel socrático en vivo).</li>
+      <li><b>Citas integradas y referencias en APA 7:</b> 25 fuentes canónicas sin citas decorativas ni autocitas indebidas.</li>
+    </ul>
+  </div>
+</div>
+<p class="slsrc">Entrega final · Gestión curricular en ambientes virtuales | Lista de chequeo institucional</p>`,
+            },
+            {
+              t: "Sustentación individual: 20 minutos para mostrar cómo piensan",
+              acc: "#3b82f6",
+              h: `<div class="sllead">Protocolo de conversación académica con el comité evaluador para evidenciar la toma de decisiones curriculares fundamentadas:</div>
+<div class="slstats" style="grid-template-columns: repeat(3, 1fr); gap:1.2em; margin:1.2em 0;">
+  <div class="slstat" style="background:rgba(255,255,255,0.04); border-top:4px solid #3b82f6; padding:1.2em 1em; text-align:left;">
+    <b style="font-size:1.8em; color:#3b82f6;">5 min</b>
+    <span style="font-size:1.05em; font-weight:700; color:var(--tx); margin:4px 0 8px; display:block;">Presentación sin leer</span>
+    <p style="font-size:0.85em; color:var(--mut); margin:0; line-height:1.4;">Exposición fluida del problema curricular, el modelo pedagógico elegido (tareas situadas) y la dependencia concreta entre componentes.</p>
+  </div>
+  <div class="slstat" style="background:rgba(255,255,255,0.04); border-top:4px solid #f59e0b; padding:1.2em 1em; text-align:left;">
+    <b style="font-size:1.8em; color:#f59e0b;">10 min</b>
+    <span style="font-size:1.05em; font-weight:700; color:var(--tx); margin:4px 0 8px; display:block;">Preguntas del tutor</span>
+    <p style="font-size:0.85em; color:var(--mut); margin:0; line-height:1.4;">Resolución de al menos tres preguntas directas e individuales, incluyendo situaciones hipotéticas, tensiones y alternativas de ajuste.</p>
+  </div>
+  <div class="slstat" style="background:rgba(255,255,255,0.04); border-top:4px solid #10b981; padding:1.2em 1em; text-align:left;">
+    <b style="font-size:1.8em; color:#10b981;">5 min</b>
+    <span style="font-size:1.05em; font-weight:700; color:var(--tx); margin:4px 0 8px; display:block;">Retroalimentación</span>
+    <p style="font-size:0.85em; color:var(--mut); margin:0; line-height:1.4;">Dictamen valorativo sobre las fortalezas demostradas y los aspectos prospectivos por seguir desarrollando en la práctica.</p>
+  </div>
+</div>
+<div class="slbox" style="border-left-color:#10b981; background:rgba(16,185,129,0.08); padding:1em 1.2em;">
+  <b style="color:#34d399;">Criterio Rector de la Sustentación:</b> «No es una defensa del documento: es una conversación sobre las decisiones. Cada integrante debe poder explicar todos los componentes con solvencia teórica y contextual, no solo el que redactó».
+</div>
+<p class="slsrc">Fuente: Módulo 3 y Cierre · Sustentación individual de la propuesta curricular</p>`,
+            },
+            {
+              t: "Diagnóstico final de coherencia interna y dictamen de calidad",
+              acc: "#8b5cf6",
+              h: `<div class="sllead">Resultado de la auditoría técnica integral realizada sobre los 07 momentos de la propuesta curricular:</div>
+<div class="slchips" style="margin:1em 0;">
+  <span class="slchip"><b>Auditoría 21/21:</b> 100% de criterios aprobados con nivel Excelente</span>
+  <span class="slchip"><b>Alineamiento:</b> Contexto ⇄ Propósito ⇄ RAs ⇄ Mediaciones ⇄ SIEE</span>
+  <span class="slchip"><b>Viabilidad:</b> Sostenibilidad colegiada y bajo consumo (&lt; 1 MB)</span>
+</div>
+<div class="slbox" style="border-left-color:#8b5cf6;">
+  <b>Dictamen Ejecutivo:</b> La propuesta tecnopedagógica supera la tensión diagnóstica inicial del ITI Caldas, formaliza las mediaciones dialógicas emergentes dentro del marco institucional, garantiza el respeto irrestricto de las 40 horas presenciales y provee una solución rigurosa, innovadora y sostenible.
+</div>
+<p class="slsrc">Auditoría curricular completada · Expediente listo para sustentación y radicación oficial en el PEI</p>`,
+            },
           ],
         ],
       ];
@@ -2717,13 +2878,37 @@
           items: EXTERNAL.map(([n, p]) => [
             n,
             VIEWER + "?file=" + encodeURIComponent("../../" + p),
-            "PDF · visor integrado",
+            "PDF • visor integrado",
           ]),
         },
         {
           t: "marco interno",
           ic: "globe",
           items: INTERNAL.map(([n, p]) => [n, p, "Documento en línea"]),
+        },
+        {
+          t: "Caso de Estudio: Innovación",
+          ic: "chart",
+          items: [
+            [
+              "Modelo TPACK · Conocimiento Tecnológico Pedagógico del Contenido",
+              VIEWER +
+                "?file=" +
+                encodeURIComponent(
+                  "../../2.Docs/TECNOPEDAGOGIA/Dialnet-ElModeloConocimientoTecnologicoPedagogicoYDeConten-9718975.pdf",
+                ),
+              "PDF • Mishra y Koehler (2006) · Dialnet",
+            ],
+            [
+              "Comunidad de Indagación CoI · Critical Inquiry in a Text-Based Environment",
+              VIEWER +
+                "?file=" +
+                encodeURIComponent(
+                  "../../2.Docs/TECNOPEDAGOGIA/Garrison_Anderson_Archer_Critical_Inquiry_model.pdf",
+                ),
+              "PDF • Garrison, Anderson y Archer (2000) · The Internet and Higher Education",
+            ],
+          ],
         },
       ];
       const R = [
@@ -2753,14 +2938,14 @@
         ],
         [
           "chart",
-          "Caso de Estudio: Innovación",
+          "Fundamentos Tecnopedagogía",
           "b3",
           "top",
-          "Experiencia de innovación curricular analizada.",
+          "Fundamentos tecnopedagógicos teóricos que operacionalizan el diseño curricular en Blended Learning.",
           [
-            "Contexto institucional",
-            "Intervención y prototipos",
-            "Resultados y evidencias",
+            "Modelo TPACK (Mishra y Koehler, 2006)",
+            "Comunidad de Indagación CoI (Garrison et al., 2000)",
+            "Mediaciones de bajo consumo digital (< 1 MB)",
           ],
         ],
         [
@@ -2804,7 +2989,11 @@
         ["user", "Expositor Principal:", "Oscar Javier Murcia Hernández"],
         ["user", "Profesor/Tutor:", "Juan Manuel Medina Barrera"],
         ["home", "Institución:", "Universidad EAN"],
-        ["cal", "Programa Académico:", "Maestría en Innovación Educativa"],
+        [
+          "cal",
+          "Programa Académico:",
+          "Maestría en Gestión de la Educación Virtual",
+        ],
         ["cal", "Asignatura:", "Gestión Curricular en Ambientes Virtuales"],
         ["cal", "Año:", "2026"],
         ["cal", "Semestre:", "I-2026"],
@@ -2828,7 +3017,7 @@
       $("#rl").innerHTML = $("#rg").innerHTML = R.map(rbtn).join("");
       $("#mg").innerHTML = M.map(
         (m, i) =>
-          `<button class="mc${i ? "" : " act"}" data-m="${i}" style="--c:${m[3]}"><span class="ar">${I("chev")}</span>${I(m[0], "mi")}<small>0${i + 1}</small><b>${m[1]}</b><div class="ft"><span class="tm">${I("clock")}${m[2]} min</span><em class="st">Pendiente</em></div></button>`,
+          `<button class="mc${i === 6 ? " act" : ""}" data-m="${i}" style="--c:${m[3]}"><span class="ar">${I("chev")}</span>${I(m[0], "mi")}<small>0${i + 1}</small><b>${m[1]}</b><div class="ft"><span class="tm">${I("clock")}${m[2]} min</span><em class="st">Pendiente</em></div></button>`,
       ).join("");
       $("#tb").innerHTML =
         `<div class="pb"><button class="pp" data-t="pp" id="pp" aria-label="Iniciar o pausar"></button><div><b>Sustentación de Trabajo de Grado</b><small>Gestión Curricular en Ambientes Virtuales</small></div></div><i class="sep"></i>` +
@@ -2859,12 +3048,12 @@
       $$(".fl").forEach((e) => (e.style.transform = "scaleX(-1)"));
       ins();
       let done = 3,
-        cur = 0,
-        cm = 0,
+        cur = 6,
+        cm = 6,
         run = 0,
         iv,
         T = 2700,
-        S = M.map((_, i) => (i ? "Pendiente" : "En curso")),
+        S = M.map((_, i) => (i === 6 ? "En curso" : "Pendiente")),
         pos = null;
       const oc = $("#oc"),
         bd = $("#bd");
@@ -2965,7 +3154,7 @@
         );
       }
       function res(i) {
-        if (i === 0 || i === 1) return marco(i);
+        if (i === 0 || i === 1 || i === 2) return marco(i);
         const r = R[i],
           p = pos || r[3];
         oo(
@@ -3018,7 +3207,7 @@
         document.body.classList.toggle("nosb");
       $("#c2").onclick = () => {
         done = 3;
-        S = M.map((_, i) => (i ? "Pendiente" : "En curso"));
+        S = M.map((_, i) => (i === 6 ? "En curso" : "Pendiente"));
         paint();
       };
       $("#rp").onchange = (e) => (pos = e.target.value || null);
