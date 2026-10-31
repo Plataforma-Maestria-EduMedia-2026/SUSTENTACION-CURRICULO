@@ -1,0 +1,3330 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Gestión Curricular en Ambientes Virtuales</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@500&display=swap"
+    />
+    <style>
+      :root {
+        --bg: #050c26;
+        --bg2: #0c2058;
+        --card: rgba(14, 32, 88, 0.45);
+        --bd: rgba(80, 130, 255, 0.3);
+        --tx: #eaf1ff;
+        --mut: #9fb3dd;
+        --pn: #08153f;
+        --tb: rgba(5, 12, 38, 0.88);
+      }
+      [data-theme="light"] {
+        --bg: #eef3ff;
+        --bg2: #d6e3ff;
+        --card: rgba(255, 255, 255, 0.85);
+        --bd: rgba(40, 90, 200, 0.3);
+        --tx: #0c1a44;
+        --mut: #4a5d8f;
+        --pn: #f5f8ff;
+        --tb: rgba(240, 245, 255, 0.92);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        font:
+          14px/1.35 Inter,
+          system-ui,
+          sans-serif;
+        color: var(--tx);
+        background: radial-gradient(
+            1100px 600px at 75% -5%,
+            var(--bg2),
+            var(--bg) 70%
+          )
+          fixed;
+        min-height: 100vh;
+        padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+      .i {
+        width: 1em;
+        height: 1em;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex: none;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 14px;
+        backdrop-filter: blur(6px);
+      }
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        height: 70px;
+        padding: 0 20px;
+        background: var(--tb);
+        border-bottom: 1px solid var(--bd);
+        backdrop-filter: blur(10px);
+      }
+      .ib {
+        position: relative;
+        font-size: 24px;
+        color: #38a8ff;
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+      }
+      .ib:hover {
+        background: rgba(80, 130, 255, 0.18);
+      }
+      .dot {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ff3b5c;
+      }
+      .lg {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #fff;
+        border-right: 1px solid var(--bd);
+        padding-right: 20px;
+      }
+      .lg .i {
+        font-size: 44px;
+      }
+      .lg path {
+        stroke-width: 2.8;
+        stroke-dasharray: 0 4.7;
+      }
+      .lg b {
+        font-size: 30px;
+        line-height: 0.9;
+        letter-spacing: -0.5px;
+        font-weight: 600;
+      }
+      .lg small {
+        display: block;
+        font-size: 11px;
+        line-height: 1;
+      }
+      .tt b {
+        font-size: 18px;
+        display: block;
+      }
+      .tt span {
+        color: var(--mut);
+      }
+      .sr {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+        width: 284px;
+        height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--bd);
+        border-radius: 10px;
+        background: var(--card);
+        color: var(--mut);
+      }
+      .sr input {
+        flex: 1;
+        min-width: 0;
+        background: none;
+        border: 0;
+        outline: 0;
+      }
+      .sl {
+        border-left: 1px solid var(--bd);
+        padding-left: 20px;
+        color: var(--mut);
+        font-size: 13px;
+      }
+      .wrap {
+        display: flex;
+        gap: 16px;
+        padding: 18px 14px 14px;
+        align-items: flex-start;
+      }
+      .side {
+        width: 262px;
+        flex: none;
+        position: sticky;
+        top: 84px;
+        height: calc(100vh - 100px);
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 16px 14px;
+        transition:
+          margin 0.3s,
+          opacity 0.3s;
+      }
+      .nosb .side {
+        margin-left: -280px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .side .lg {
+        border: 0;
+        justify-content: center;
+        padding: 6px 0 14px;
+        border-bottom: 1px solid var(--bd);
+        margin-bottom: 12px;
+        color: var(--tx);
+      }
+      .side .lg .i {
+        font-size: 60px;
+      }
+      .side .lg b {
+        font-size: 42px;
+      }
+      .side .lg small {
+        font-size: 15px;
+      }
+      .side h3 {
+        font-size: 18px;
+        margin: 6px 0 12px 4px;
+      }
+      .inf {
+        list-style: none;
+        display: grid;
+        gap: 11px;
+        margin-left: 4px;
+      }
+      .inf li {
+        display: flex;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--mut);
+      }
+      .inf .i {
+        font-size: 18px;
+        color: var(--tx);
+        margin-top: 1px;
+      }
+      .inf b {
+        display: block;
+        color: var(--tx);
+        font-weight: 500;
+      }
+      .side q {
+        display: block;
+        margin: 18px 4px;
+        font-style: italic;
+        color: var(--mut);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .nav {
+        margin-top: auto;
+        display: grid;
+        gap: 2px;
+      }
+      .nv {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 11px 14px;
+        border-radius: 9px;
+        font-size: 14px;
+        text-align: left;
+        border-left: 3px solid transparent;
+      }
+      .nv .i {
+        font-size: 20px;
+      }
+      .nv:hover {
+        background: rgba(80, 130, 255, 0.15);
+      }
+      .nv.on {
+        background: linear-gradient(90deg, #0a49c9, rgba(10, 73, 201, 0.25));
+        border-color: #38a8ff;
+        font-weight: 600;
+      }
+      main {
+        flex: 1;
+        min-width: 0;
+      }
+      .view {
+        display: none;
+      }
+      .view.on {
+        display: block;
+      }
+      .r1 {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .pg {
+        flex: 1;
+        padding: 16px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 18px;
+      }
+      .pg b {
+        flex: 1 0 100%;
+        font-size: 15px;
+      }
+      .bar {
+        flex: 1;
+        height: 10px;
+        border-radius: 9px;
+        background: rgba(120, 150, 220, 0.25);
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        border-radius: 9px;
+        background: linear-gradient(90deg, #19e0b0, #2fb8ff);
+        transition: width 0.5s;
+      }
+      .pg strong {
+        font-size: 26px;
+        font-weight: 600;
+      }
+      .pg small {
+        flex: 1 0 100%;
+        color: var(--mut);
+      }
+      .sx {
+        width: 128px;
+        padding: 12px 6px;
+        text-align: center;
+      }
+      .sx .i {
+        font-size: 30px;
+      }
+      .sx span {
+        display: block;
+        color: var(--mut);
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .sx b {
+        font-size: 26px;
+        font-weight: 600;
+      }
+      .g2 {
+        display: grid;
+        grid-template-columns: 1fr 313px;
+        grid-template-areas: "h r" "m r";
+        gap: 16px;
+      }
+      .hero {
+        grid-area: h;
+        position: relative;
+        min-height: 408px;
+        border-radius: 16px;
+        border: 1.5px solid #4a8dff;
+        box-shadow: 0 0 24px rgba(47, 123, 255, 0.35);
+        overflow: hidden;
+        padding: 64px 20px 0 124px;
+        color: #fff;
+        background: linear-gradient(90deg, #06143c, #071a4a 50%, #06122f);
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 8% 25%,
+            rgba(120, 170, 255, 0.4),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 92% 40%,
+            rgba(60, 110, 220, 0.35),
+            transparent 30%
+          );
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(6, 18, 50, 0.15),
+          rgba(6, 18, 50, 0.78) 40%,
+          rgba(6, 18, 50, 0.55)
+        );
+      }
+      .bk {
+        position: absolute;
+        right: -24px;
+        height: 44px;
+        border-radius: 5px;
+        border-top: 7px solid #aebfe0;
+        background: linear-gradient(#2b4777, #0b1a3d);
+      }
+      .lp {
+        position: absolute;
+        left: -40px;
+        top: 10px;
+        width: 170px;
+        height: 350px;
+        transform: skewY(-9deg);
+        background: linear-gradient(90deg, #1b3a7a, #0a1a45);
+        box-shadow: 0 0 70px rgba(100, 160, 255, 0.45);
+      }
+      .hero > *:not(.bk, .lp) {
+        position: relative;
+        z-index: 2;
+      }
+      .eb {
+        letter-spacing: 2px;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .eb:after {
+        content: "";
+        width: 44px;
+        height: 2px;
+        background: #38a8ff;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 3.6vw, 46px);
+        line-height: 1.12;
+        margin: 14px 0 20px;
+        font-weight: 700;
+      }
+      .hero h2 {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .hero p {
+        font-size: 17px;
+        opacity: 0.9;
+        margin-top: 2px;
+      }
+      .scr {
+        position: absolute !important;
+        right: 44px;
+        bottom: 98px;
+        font:
+          500 36px Caveat,
+          cursive;
+        transform: rotate(-8deg);
+      }
+      .scr svg {
+        display: block;
+        stroke: #19e0b0;
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+      }
+      .ft2 {
+        position: absolute !important;
+        left: 190px;
+        bottom: 22px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        max-width: 300px;
+      }
+      .ft2:before {
+        content: "";
+        width: 46px;
+        height: 3px;
+        background: #38a8ff;
+        flex: none;
+      }
+      .res {
+        grid-area: r;
+        align-self: start;
+        padding: 16px;
+      }
+      .res h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 17px;
+      }
+      .res h3 .i {
+        font-size: 22px;
+        color: #38a8ff;
+      }
+      .res > p {
+        color: var(--mut);
+        font-size: 12.5px;
+        margin: 4px 0 6px 32px;
+      }
+      .rb {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        margin-top: 9px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--rc);
+        background: linear-gradient(90deg, var(--rg), rgba(0, 0, 0, 0.05));
+        text-align: left;
+        transition: transform 0.2s;
+      }
+      .rb:hover {
+        transform: translateX(3px);
+      }
+      .rb > .i {
+        font-size: 28px;
+        color: var(--rc);
+      }
+      .rb span {
+        flex: 1;
+        font-size: 13px;
+      }
+      .rb b {
+        display: block;
+        font-weight: 600;
+      }
+      .rb small {
+        color: var(--mut);
+        font-size: 11.5px;
+      }
+      .b1 {
+        --rc: #2f7bff;
+        --rg: rgba(47, 123, 255, 0.4);
+      }
+      .b2 {
+        --rc: #6a6af0;
+        --rg: rgba(91, 91, 230, 0.4);
+      }
+      .b3 {
+        --rc: #d98a2b;
+        --rg: rgba(217, 138, 43, 0.45);
+      }
+      .b4 {
+        --rc: #19b37a;
+        --rg: rgba(25, 179, 122, 0.4);
+      }
+      .b5 {
+        --rc: #8b5cf0;
+        --rg: rgba(123, 75, 224, 0.4);
+      }
+      .b6 {
+        --rc: #1fb0b0;
+        --rg: rgba(31, 160, 160, 0.4);
+      }
+      .qt {
+        margin-top: 16px;
+        padding: 14px;
+        border: 1px solid var(--bd);
+        border-radius: 12px;
+        display: flex;
+        gap: 10px;
+        font-style: italic;
+        color: var(--mut);
+        font-size: 13.5px;
+      }
+      .qt i {
+        font:
+          700 44px/1 Georgia,
+          serif;
+        color: #38a8ff;
+      }
+      .mods {
+        grid-area: m;
+      }
+      .mh {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .mh h3 {
+        font-size: 19px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .mh h3 .i {
+        color: #38a8ff;
+        font-size: 24px;
+      }
+      .mh span {
+        margin-left: auto;
+        color: var(--mut);
+        display: flex;
+        gap: 7px;
+        align-items: center;
+      }
+      .vl {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 14px;
+        border: 1px solid var(--bd);
+        border-radius: 9px;
+        background: var(--card);
+        font-size: 13px;
+      }
+      .mg {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .ls .mg {
+        grid-template-columns: 1fr;
+      }
+      .mc {
+        position: relative;
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 2px 8px;
+        align-content: start;
+        min-height: 114px;
+        padding: 14px;
+        text-align: left;
+        border: 1px solid var(--bd);
+        border-radius: 12px;
+        background: var(--card);
+        transition: 0.2s;
+      }
+      .mc:hover {
+        transform: translateY(-3px);
+        border-color: var(--c);
+      }
+      .mc.act {
+        border-color: #3b82f6;
+        box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+      }
+      .mi {
+        grid-row: 1/3;
+        font-size: 32px;
+        color: var(--c);
+      }
+      .mc small {
+        color: var(--c);
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .mc b {
+        font-size: 13px;
+        line-height: 1.25;
+      }
+      .mc .ar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #2058d8;
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+      }
+      .mc .ft {
+        grid-column: 1/-1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        color: var(--mut);
+        font-size: 12px;
+      }
+      .tm {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .st {
+        font-style: normal;
+        padding: 3px 14px;
+        border: 1px solid var(--bd);
+        border-radius: 7px;
+        font-size: 11px;
+        background: rgba(80, 130, 255, 0.1);
+        color: var(--tx);
+      }
+      .st.e {
+        background: #1d5be0;
+        border-color: #1d5be0;
+        color: #fff;
+      }
+      .st.d {
+        background: #0f9d73;
+        border-color: #0f9d73;
+        color: #fff;
+      }
+      .dim {
+        opacity: 0.22;
+      }
+      .tools {
+        position: sticky;
+        bottom: 10px;
+        z-index: 15;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        background: var(--pn);
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+      }
+      .tools > .pb {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-right: 6px;
+      }
+      .pp {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #12307a;
+        color: #38a8ff;
+        font-size: 20px;
+        display: grid;
+        place-items: center;
+      }
+      .pb b {
+        display: block;
+        font-size: 13px;
+      }
+      .pb small {
+        color: var(--mut);
+        font-size: 12px;
+      }
+      .tl {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        min-width: 52px;
+        padding: 6px 8px;
+        border-radius: 9px;
+        font-size: 10px;
+        color: var(--mut);
+      }
+      .tl .i {
+        font-size: 19px;
+        color: var(--tx);
+      }
+      .tl:hover,
+      .tl.on {
+        background: rgba(56, 168, 255, 0.22);
+        color: #fff;
+      }
+      .tl#tm {
+        font-size: 16px;
+        color: var(--tx);
+        font-variant-numeric: tabular-nums;
+        min-width: 66px;
+      }
+      .sep {
+        width: 1px;
+        height: 34px;
+        background: var(--bd);
+      }
+      .tg {
+        margin-left: auto;
+        font-style: italic;
+        color: var(--mut);
+        font-size: 12.5px;
+      }
+      .go {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 26px;
+        border-radius: 10px;
+        font-weight: 600;
+        background: linear-gradient(90deg, #0a49d6, #2f8bff);
+        border: 1px solid #6fb0ff;
+        color: #fff;
+        box-shadow: 0 0 18px rgba(47, 123, 255, 0.5);
+      }
+      .vw {
+        padding: 22px;
+        min-height: 420px;
+      }
+      .vw h2 {
+        font-size: 22px;
+        margin-bottom: 14px;
+      }
+      #sl {
+        --sz: 20px;
+        font-size: var(--sz);
+        min-height: 330px;
+        padding: 34px 40px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #0a2260, #06143c);
+        color: #fff;
+        border: 1px solid var(--bd);
+      }
+      #sl small {
+        color: #38a8ff;
+        font-size: 0.65em;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      #sl h3 {
+        font-size: 1.9em;
+        margin: 8px 0 18px;
+      }
+      #sl li {
+        margin: 0 0 10px 22px;
+        line-height: 1.45;
+      }
+      .dots {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 14px;
+      }
+      .dots i {
+        width: 30px;
+        height: 5px;
+        border-radius: 4px;
+        background: rgba(120, 150, 220, 0.3);
+      }
+      .dots i.on {
+        background: #19e0b0;
+      }
+      .rg {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 12px;
+      }
+      .fm {
+        display: grid;
+        gap: 14px;
+        max-width: 620px;
+      }
+      .fm label {
+        display: grid;
+        gap: 6px;
+        color: var(--mut);
+      }
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid var(--bd);
+        background: var(--card);
+      }
+      textarea {
+        min-height: 280px;
+        resize: vertical;
+      }
+      .bn {
+        padding: 11px 22px;
+        border-radius: 10px;
+        border: 1px solid #4a8dff;
+        background: rgba(47, 123, 255, 0.22);
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .bn:hover {
+        background: #2f7bff;
+        color: #fff;
+      }
+      .gd {
+        margin-top: 22px;
+        padding-left: 18px;
+        color: var(--mut);
+        line-height: 1.6;
+        max-width: 720px;
+      }
+      .gd b {
+        color: var(--tx);
+      }
+      .bd {
+        position: fixed;
+        inset: 0;
+        z-index: 45;
+        background: rgba(0, 0, 10, 0.6);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+      }
+      .bd.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .oc {
+        position: fixed;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        background: var(--pn);
+        border: 1px solid var(--bd);
+        transition:
+          transform 0.35s,
+          visibility 0.35s;
+        visibility: hidden;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      }
+      .oc.show {
+        transform: none !important;
+        visibility: visible;
+      }
+      .oc.top {
+        top: 0;
+        left: 0;
+        right: 0;
+        max-height: 80vh;
+        transform: translateY(-100%);
+      }
+      .oc.bottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-height: 80vh;
+        transform: translateY(100%);
+      }
+      .oc.left,
+      .oc.right {
+        top: 0;
+        bottom: 0;
+        width: min(420px, 92vw);
+      }
+      .oc.left {
+        left: 0;
+        transform: translateX(-100%);
+      }
+      .oc.right {
+        right: 0;
+        transform: translateX(100%);
+      }
+      .oc.full {
+        inset: 0;
+        width: 100%;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+        transform: translateY(100%);
+      }
+      .oc.full.show {
+        transform: none !important;
+      }
+      .oc.full .ob {
+        flex: 1;
+      }
+      .resource-grid {
+        width: min(1100px, 100%);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: auto;
+      }
+      .resource-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 150px;
+        padding: 20px;
+        text-align: left;
+        border: 1px solid var(--bd);
+        border-radius: 16px;
+        background: var(--card);
+        color: var(--tx);
+        transition: 0.2s;
+      }
+      .resource-card:hover {
+        transform: translateY(-3px);
+        border-color: #38a8ff;
+        box-shadow: 0 0 22px rgba(56, 168, 255, 0.25);
+      }
+      .resource-card .i {
+        font-size: 34px;
+        color: #38a8ff;
+      }
+      .resource-card b {
+        font-size: 15px;
+        line-height: 1.3;
+      }
+      .resource-card small {
+        color: var(--mut);
+        line-height: 1.4;
+      }
+      .ob.center {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .dcap {
+        max-width: 720px;
+        text-align: center;
+        color: var(--mut);
+        font-size: 13.5px;
+        line-height: 1.55;
+        margin-bottom: 14px;
+      }
+      .docgrid {
+        width: min(1040px, 100%);
+        margin: 0 auto;
+      }
+      .docgrid .resource-card {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 12px;
+        min-height: 168px;
+        padding: 24px 18px;
+      }
+      .docgrid .resource-card .i {
+        font-size: 42px;
+      }
+      .docgrid .resource-card b {
+        font-size: 15.5px;
+      }
+      .docgrid .resource-card small {
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+      }
+      .pdfbox {
+        position: fixed;
+        inset: 0;
+        z-index: 120;
+        display: none;
+        flex-direction: column;
+        background: #020817;
+      }
+      .pdfbox.show {
+        display: flex;
+      }
+      .pdfhead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background: #071b45;
+        border-bottom: 1px solid #244c91;
+      }
+      .pdfhead h2 {
+        font-size: 15px;
+      }
+      .pdfhead .hl {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+      .pdfhead .hl h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pdfhead .lnk {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border: 1px solid #244c91;
+        border-radius: 9px;
+        background: rgba(56, 168, 255, 0.14);
+        color: #cfe6ff;
+        font-size: 12.5px;
+        text-decoration: none;
+      }
+      .pdfhead .lnk .i {
+        font-size: 15px;
+      }
+      .pdfhead .lnk:hover {
+        background: #2f7bff;
+        border-color: #6fb0ff;
+        color: #fff;
+      }
+      .pdfclose {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .pdfbox iframe {
+        flex: 1;
+        width: 100%;
+        border: 0;
+        background: #172033;
+      }
+      .oh {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 12px 12px 22px;
+        border-bottom: 1px solid var(--bd);
+      }
+      .oh h2 {
+        font-size: 18px;
+      }
+      .ob {
+        padding: 22px;
+        overflow: auto;
+      }
+      .ob ul {
+        margin: 12px 0 0 20px;
+        line-height: 1.7;
+      }
+      .ob .c {
+        text-align: center;
+        font-size: 16px;
+        max-width: 640px;
+        margin: 0 auto 20px;
+      }
+      .bt {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .pos {
+        margin-top: 14px;
+        color: var(--mut);
+        font-size: 12px;
+      }
+      #cv {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        pointer-events: none;
+      }
+      #cv.on {
+        pointer-events: auto;
+        cursor: crosshair;
+      }
+      .las {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        margin: -10px;
+        border-radius: 50%;
+        background: radial-gradient(
+          #ff2a2a 30%,
+          rgba(255, 42, 42, 0.25) 65%,
+          transparent
+        );
+        pointer-events: none;
+        z-index: 70;
+        display: none;
+      }
+      #blk {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        background: #000;
+        display: none;
+        color: #555;
+        place-items: center;
+      }
+      #blk.on {
+        display: grid;
+      }
+      @media (max-width: 1100px) {
+        .g2 {
+          grid-template-columns: 1fr;
+          grid-template-areas: "h" "r" "m";
+        }
+        .mg {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .r1 {
+          flex-wrap: wrap;
+        }
+        .pg {
+          flex: 1 0 100%;
+        }
+        .sx {
+          flex: 1;
+        }
+        .sl,
+        .tt span {
+          display: none;
+        }
+      }
+      @media (max-width: 900px) {
+        .side {
+          position: fixed;
+          top: 78px;
+          bottom: 8px;
+          left: 8px;
+          z-index: 30;
+          height: auto;
+          background: var(--pn);
+        }
+        .nosb .side {
+          margin-left: -300px;
+        }
+        .hero {
+          padding: 40px 20px 120px;
+        }
+        .lp,
+        .bk,
+        .ft2 {
+          display: none;
+        }
+        .sr {
+          width: auto;
+          flex: 1;
+        }
+        .lg b,
+        .lg small {
+          display: none;
+        }
+        .lg {
+          padding: 0;
+          border: 0;
+        }
+      }
+      @media (max-width: 560px) {
+        .mg {
+          grid-template-columns: 1fr;
+        }
+        .scr {
+          right: 16px;
+          bottom: 50px;
+        }
+        .tg {
+          display: none;
+        }
+        .tt {
+          display: none;
+        }
+      }
+      :root {
+        --sz: 26px;
+      }
+      main {
+        padding-bottom: 72px;
+      }
+      .tools {
+        position: fixed;
+        left: 50%;
+        bottom: 8px;
+        transform: translateX(-50%);
+        z-index: 100;
+        margin: 0;
+        gap: 2px;
+        padding: 6px 10px;
+        flex-wrap: nowrap;
+        max-width: 96vw;
+        overflow-x: auto;
+        border-radius: 16px;
+      }
+      .tl.gr {
+        cursor: grab;
+        touch-action: none;
+        min-width: 34px;
+        border-right: 1px solid var(--bd);
+        border-radius: 9px 0 0 9px;
+        margin-right: 4px;
+      }
+      /* Barra flotante de herramientas: siempre en modo oscuro */
+      .tools {
+        background: linear-gradient(180deg, #0c1738, #070e26);
+        border: 1px solid rgba(120, 160, 255, 0.18);
+        color: #eaf1ff;
+        box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+      }
+      .tools .tl {
+        color: #b9cdf5;
+      }
+      .tools .tl .i {
+        color: #dbe7ff;
+      }
+      .tools .tl:hover,
+      .tools .tl.on {
+        background: rgba(64, 130, 255, 0.25);
+        color: #fff;
+      }
+      .tools .tl.on .i {
+        color: #fff;
+      }
+      .tools .tl#tm {
+        color: #eaf1ff;
+      }
+      .tools .tl.gr {
+        border-right-color: rgba(120, 160, 255, 0.2);
+      }
+      .tools .tg {
+        color: #7f97c9;
+      }
+      .tools .sep {
+        background: rgba(120, 160, 255, 0.2);
+      }
+      .tools .pp {
+        background: #12307a;
+        color: #38a8ff;
+      }
+      .tools .pb b {
+        color: #eaf1ff;
+      }
+      .tools .pb small {
+        color: #7f97c9;
+      }
+      #cv {
+        z-index: 90;
+      }
+      .las {
+        z-index: 95;
+      }
+      #blk {
+        z-index: 96;
+      }
+      .fx {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        margin: -10px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        pointer-events: none;
+        z-index: 96;
+        background: radial-gradient(#fff 15%, #ff2a2a 45%, transparent 70%);
+        box-shadow: 0 0 30px 10px rgba(255, 42, 42, 0.7);
+        animation: fx 0.8s ease-out forwards;
+      }
+      @keyframes fx {
+        to {
+          transform: scale(7);
+          opacity: 0;
+        }
+      }
+      body.lz,
+      body.lz * {
+        user-select: none;
+      }
+      .mods {
+        container-type: inline-size;
+      }
+      .mc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+        grid-template-columns: none;
+        aspect-ratio: 1.25/1;
+        min-height: 0;
+      }
+      .mi {
+        grid-row: auto;
+      }
+      .mc .ft {
+        width: 100%;
+        margin-top: auto;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      @container (min-width:1100px) {
+        .mg {
+          grid-template-columns: repeat(8, 1fr);
+        }
+        .mc {
+          aspect-ratio: 1;
+          padding: 11px;
+        }
+        .mc b {
+          font-size: 12px;
+        }
+        .st {
+          padding: 2px 8px;
+        }
+      }
+      .ls .mc {
+        aspect-ratio: auto;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 14px;
+      }
+      .ls .mc .ft {
+        width: auto;
+        margin: 0 40px 0 auto;
+        gap: 14px;
+        flex-wrap: nowrap;
+      }
+      .vw.pl {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 18px;
+        text-align: center;
+      }
+      .oc.pr {
+        inset: 0;
+        width: 100%;
+        height: 100dvh;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .oc.pr .oh {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        left: auto;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        z-index: 6;
+      }
+      .oc.pr .oh h2 {
+        display: none;
+      }
+      .oc.pr .ob {
+        overflow: auto;
+      }
+      .ob.pm {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 22px;
+        text-align: center;
+        padding: 56px clamp(24px, 4vw, 76px) 132px;
+        background: var(--pn);
+        background:
+          radial-gradient(
+            1000px 520px at 12% -8%,
+            color-mix(in srgb, var(--acc, #2f6bd8) 14%, transparent),
+            transparent 70%
+          ),
+          radial-gradient(
+            760px 420px at 100% 108%,
+            rgba(47, 158, 99, 0.1),
+            transparent 70%
+          ),
+          var(--pn);
+      }
+      .ob.pm .sl0 {
+        width: 100%;
+        margin-top: auto;
+      }
+      .ob.pm .bt {
+        margin-bottom: auto;
+      }
+      .oc.pr .ob.pm .sl0.rich {
+        max-width: 1280px !important;
+      }
+      .sl0 {
+        font-size: var(--sz);
+        display: grid;
+        justify-items: center;
+        gap: 14px;
+        max-width: 900px;
+      }
+      .sl0 h3 {
+        font-size: 1.9em;
+        line-height: 1.2;
+      }
+      .sl0 h3.bl {
+        font-size: 1.6em;
+        font-weight: 600;
+      }
+      .sl0 small {
+        color: #38a8ff;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 0.6em;
+      }
+      .sl0 p {
+        color: var(--mut);
+      }
+      /* ---- Diapositivas de contenido rico (objetos {t,h,acc} en M[i][4]) ---- */
+      .sl0.rich small {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: 0.52em;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--acc, #2f6bd8);
+        background: color-mix(in srgb, var(--acc, #2f6bd8) 9%, transparent);
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #2f6bd8) 35%, transparent);
+        border-radius: 999px;
+        padding: 0.4em 0.95em;
+      }
+      .sl0.rich small::before {
+        content: "";
+        width: 0.55em;
+        height: 0.55em;
+        border-radius: 50%;
+        background: var(--acc, #2f6bd8);
+        box-shadow: 0 0 0 0.22em
+          color-mix(in srgb, var(--acc, #2f6bd8) 18%, transparent);
+      }
+      .sl0.rich h3.bl {
+        font-size: 1.55em;
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        line-height: 1.15;
+        margin: 0.1em 0 0.3em;
+      }
+      .sl0 .slc {
+        width: 100%;
+        color: var(--tx);
+        text-align: left;
+        font-size: 1em;
+        line-height: 1.5;
+      }
+      .sl0 .slc .sllead {
+        font-size: 1.02em;
+        line-height: 1.55;
+        margin: 0 0 0.6em;
+        color: var(--tx);
+      }
+      .sl0 .slc .sllead b {
+        color: var(--acc, #2f6bd8);
+        font-weight: 800;
+      }
+      .sl0 .slstats {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.5em;
+        margin: 0 0 0.5em;
+      }
+      .sl0 .slstat {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--acc, #2f6bd8) 30%, var(--bd));
+        border-radius: 0.7em;
+        background: var(--card);
+        padding: 0.55em 0.3em;
+        text-align: center;
+        box-shadow: 0 10px 26px rgba(8, 18, 48, 0.08);
+      }
+      .sl0 .slstat::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--acc, #2f6bd8);
+        opacity: 0.75;
+      }
+      .sl0 .slstat b {
+        display: block;
+        font-size: 1.5em;
+        color: var(--acc, #2f6bd8);
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .sl0 .slstat span {
+        font-size: 0.6em;
+        color: var(--mut);
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        font-weight: 700;
+      }
+      .sl0 .slmx {
+        display: grid;
+        gap: 0.6em;
+        margin: 0 0 0.5em;
+      }
+      .sl0 .slmx.two {
+        grid-template-columns: 1fr 1fr;
+      }
+      .sl0 .slmx.three {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .sl0 .slcell {
+        border: 1px solid color-mix(in srgb, var(--acc, #2f6bd8) 24%, var(--bd));
+        border-radius: 0.8em;
+        background: var(--card);
+        padding: 0.75em 0.85em;
+        box-shadow: 0 10px 28px rgba(8, 18, 48, 0.08);
+      }
+      .sl0 .slcell.warn {
+        border-color: rgba(229, 72, 77, 0.5);
+        background:
+          linear-gradient(180deg, rgba(229, 72, 77, 0.08), transparent 60%),
+          var(--card);
+      }
+      .sl0 .sltag {
+        display: inline-block;
+        font-size: 0.56em;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: var(--acc, #2f6bd8);
+        background: color-mix(in srgb, var(--acc, #2f6bd8) 12%, transparent);
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #2f6bd8) 35%, transparent);
+        border-radius: 999px;
+        padding: 0.35em 0.9em;
+        margin-bottom: 0.45em;
+      }
+      .sl0 .slcell ul {
+        margin: 0;
+        padding-left: 1.15em;
+      }
+      .sl0 .slcell li {
+        font-size: 0.72em;
+        margin: 0.28em 0;
+        color: var(--tx);
+        line-height: 1.45;
+      }
+      .sl0 .slcell li::marker {
+        color: var(--acc, #2f6bd8);
+      }
+      .sl0 .slcell p {
+        font-size: 0.74em;
+        margin: 0;
+        color: var(--tx);
+        line-height: 1.5;
+      }
+      .sl0 .slcell b {
+        color: var(--tx);
+      }
+      .sl0 .slband {
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #2f6bd8) 30%, transparent);
+        border-left: 0.28em solid var(--acc, #2f6bd8);
+        background: var(--bg2);
+        background: color-mix(in srgb, var(--acc, #2f6bd8) 8%, var(--bg2));
+        border-radius: 0.65em;
+        padding: 0.6em 0.9em;
+        font-size: 0.82em;
+        font-weight: 600;
+        color: var(--tx);
+        margin: 0.1em 0 0;
+        text-align: left;
+      }
+      .sl0 .slchips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em;
+        margin: 0 0 0.4em;
+      }
+      .sl0 .slchip {
+        font-size: 0.56em;
+        padding: 0.35em 0.85em;
+        border-radius: 999px;
+        border: 1px solid var(--bd);
+        background: var(--card);
+        color: var(--tx);
+      }
+      .sl0 .slbox {
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #e5484d) 35%, transparent);
+        border-left: 0.3em solid var(--acc, #e5484d);
+        background: var(--card);
+        background:
+          linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--acc, #e5484d) 10%, transparent),
+            transparent 65%
+          ),
+          var(--card);
+        border-radius: 0.8em;
+        padding: 0.7em 1em;
+        font-size: 0.86em;
+        line-height: 1.5;
+        color: var(--tx);
+        margin: 0 0 0.55em;
+        text-align: left;
+        box-shadow: 0 10px 30px rgba(8, 18, 48, 0.08);
+      }
+      .sl0 .slbox b {
+        color: var(--acc, #e5484d);
+      }
+      .sl0 .sltbl {
+        display: grid;
+        grid-template-columns: 1.55fr 1fr;
+        gap: 0.6em;
+        margin: 0 0 0.5em;
+      }
+      .sl0 .sltblcol {
+        border: 1px solid var(--bd);
+        border-radius: 0.8em;
+        background: var(--card);
+        padding: 0.6em 0.75em;
+        text-align: left;
+        box-shadow: 0 10px 28px rgba(8, 18, 48, 0.08);
+      }
+      .sl0 .sltblhd {
+        display: flex;
+        align-items: center;
+        gap: 0.55em;
+        font-size: 0.62em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--acc, #2f6bd8);
+        padding-bottom: 0.4em;
+        margin-bottom: 0.1em;
+        border-bottom: 1px solid
+          color-mix(in srgb, var(--acc, #2f6bd8) 35%, transparent);
+      }
+      .sl0 .sltblhd::before {
+        content: "";
+        flex: 0 0 auto;
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        background: var(--acc, #2f6bd8);
+        box-shadow: 0 0 0 0.22em
+          color-mix(in srgb, var(--acc, #2f6bd8) 20%, transparent);
+      }
+      .sl0 .sltblhd.in {
+        color: #2f9e63;
+        border-bottom-color: rgba(47, 158, 99, 0.4);
+      }
+      .sl0 .sltblhd.in::before {
+        background: #2f9e63;
+        box-shadow: 0 0 0 0.22em rgba(47, 158, 99, 0.18);
+      }
+      .sl0 .slrow {
+        display: grid;
+        grid-template-columns: minmax(9em, 34%) 1fr;
+        gap: 0.55em;
+        align-items: baseline;
+        font-size: 0.7em;
+        padding: 0.3em 0.25em;
+        border-bottom: 1px solid var(--bd);
+        text-align: left;
+        line-height: 1.4;
+      }
+      .sl0 .slrow:nth-child(even) {
+        background: color-mix(in srgb, var(--acc, #2f6bd8) 5%, transparent);
+        border-radius: 0.35em;
+      }
+      .sl0 .slrow:last-child {
+        border-bottom: none;
+      }
+      .sl0 .slrow b {
+        color: var(--tx);
+        font-weight: 700;
+      }
+      .sl0 .slrow span {
+        color: var(--mut);
+      }
+      .sl0 .slchip.ex {
+        border-color: rgba(47, 107, 216, 0.5);
+      }
+      .sl0 .slchip.in {
+        border-color: rgba(47, 158, 99, 0.5);
+      }
+      .sl0 .slsrc {
+        font-size: 0.56em;
+        color: var(--mut);
+        letter-spacing: 0.04em;
+        text-align: left;
+        margin-top: 0.4em;
+        padding-top: 0.4em;
+        border-top: 1px dashed var(--bd);
+      }
+      .sl0 .slbox.goal {
+        font-size: 1.05em;
+        line-height: 1.55;
+        padding: 0.85em 1.1em;
+      }
+      .sl0 .slra {
+        border: 1px solid var(--bd);
+        border-radius: 0.8em;
+        overflow: hidden;
+        background: var(--card);
+        box-shadow: 0 10px 28px rgba(8, 18, 48, 0.08);
+        margin: 0 0 0.45em;
+      }
+      .sl0 .slrarow {
+        display: grid;
+        grid-template-columns: 1.8fr 0.85fr 1fr;
+        gap: 0.75em;
+        padding: 0.55em 0.75em;
+        border-bottom: 1px solid var(--bd);
+        font-size: 0.66em;
+        line-height: 1.4;
+        text-align: left;
+        align-items: start;
+      }
+      .sl0 .slrarow:last-child {
+        border-bottom: 0;
+      }
+      .sl0 .slrarow.hd {
+        font-size: 0.56em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--acc, #b45309);
+        background: color-mix(in srgb, var(--acc, #b45309) 9%, transparent);
+      }
+      .sl0 .slrarow b {
+        color: var(--acc, #b45309);
+        font-weight: 800;
+      }
+      .sl0 .slrarow > span:nth-child(2) {
+        font-weight: 700;
+        color: var(--tx);
+      }
+      .sl0 .slrarow:nth-child(even):not(.hd) {
+        background: color-mix(in srgb, var(--acc, #b45309) 3.5%, transparent);
+      }
+      .sl0 .slrarow u {
+        text-decoration: none;
+        border-bottom: 1.5px dotted
+          color-mix(in srgb, var(--acc, #b45309) 70%, transparent);
+        font-weight: 600;
+        color: var(--tx);
+      }
+      .sl0 .slrarow i {
+        font-style: normal;
+        color: var(--mut);
+      }
+      .sl0 .slcomp {
+        display: inline-block;
+        font-size: 0.78em;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 0.08em 0.4em;
+        border-radius: 4px;
+        background: color-mix(in srgb, var(--acc, #b45309) 11%, transparent);
+        color: var(--acc, #b45309);
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #b45309) 24%, transparent);
+        margin: 0 0.2em;
+        vertical-align: baseline;
+      }
+      /* ---- Paso 03: Modelo y secuencia (flujo de etapas y contraste) ---- */
+      .sl0 .slflow {
+        display: flex;
+        align-items: stretch;
+        gap: 0.5em;
+        width: 100%;
+        margin: 0 0 0.45em;
+      }
+      .sl0 .slstage {
+        flex: 1;
+        border: 1px solid color-mix(in srgb, var(--acc, #0d9488) 28%, var(--bd));
+        border-radius: 0.8em;
+        background: var(--card);
+        padding: 0.65em 0.8em;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-shadow: 0 8px 24px rgba(8, 18, 48, 0.07);
+        position: relative;
+      }
+      .sl0 .slstage.final {
+        border-color: var(--acc, #0d9488);
+        background: linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--acc, #0d9488) 10%, transparent),
+            transparent 65%
+          ),
+          var(--card);
+      }
+      .sl0 .slarrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4em;
+        font-weight: 800;
+        color: var(--acc, #0d9488);
+        opacity: 0.65;
+        user-select: none;
+      }
+      .sl0 .slstagehd {
+        font-size: 0.82em;
+        font-weight: 800;
+        color: var(--acc, #0d9488);
+        line-height: 1.2;
+        margin-bottom: 0.15em;
+      }
+      .sl0 .slstagesub {
+        font-size: 0.54em;
+        font-weight: 700;
+        color: var(--mut);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.35em;
+        padding-bottom: 0.3em;
+        border-bottom: 1px dashed var(--bd);
+      }
+      .sl0 .slstagelogro {
+        font-size: 0.64em;
+        line-height: 1.38;
+        color: var(--tx);
+        margin-bottom: 0.5em;
+      }
+      .sl0 .slstageprod {
+        font-size: 0.62em;
+        line-height: 1.35;
+        padding: 0.4em 0.6em;
+        border-radius: 0.5em;
+        background: color-mix(in srgb, var(--acc, #0d9488) 8%, transparent);
+        border: 1px solid
+          color-mix(in srgb, var(--acc, #0d9488) 22%, transparent);
+        color: var(--tx);
+        margin-top: auto;
+      }
+      .sl0 .slstageprod b {
+        color: var(--acc, #0d9488);
+        font-weight: 800;
+      }
+      .sl0 .slcontrast {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6em;
+        width: 100%;
+        margin: 0.1em 0 0.35em;
+      }
+      .sl0 .slcbox {
+        border-radius: 0.75em;
+        padding: 0.55em 0.85em;
+        text-align: left;
+        font-size: 0.68em;
+        line-height: 1.42;
+        border: 1px solid var(--bd);
+        background: var(--card);
+        box-shadow: 0 6px 20px rgba(8, 18, 48, 0.05);
+      }
+      .sl0 .slcbox.no {
+        border-color: rgba(229, 72, 77, 0.45);
+        border-left: 0.28em solid #e5484d;
+        background: linear-gradient(
+            180deg,
+            rgba(229, 72, 77, 0.06),
+            transparent 70%
+          ),
+          var(--card);
+      }
+      .sl0 .slcbox.no b {
+        color: #e5484d;
+        display: block;
+        font-size: 0.88em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.2em;
+      }
+      .sl0 .slcbox.yes {
+        border-color: rgba(47, 158, 99, 0.45);
+        border-left: 0.28em solid #2f9e63;
+        background: linear-gradient(
+            180deg,
+            rgba(47, 158, 99, 0.06),
+            transparent 70%
+          ),
+          var(--card);
+      }
+      .sl0 .slcbox.yes b {
+        color: #2f9e63;
+        display: block;
+        font-size: 0.88em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.2em;
+      }
+      /* ---- Paso 04: Mediaciones (tabla b-learning y matriz de riesgos) ---- */
+      .sl0 .slmed {
+        border: 1px solid var(--bd);
+        border-radius: 0.8em;
+        overflow: hidden;
+        background: var(--card);
+        box-shadow: 0 10px 28px rgba(8, 18, 48, 0.08);
+        margin: 0 0 0.45em;
+        width: 100%;
+      }
+      .sl0 .slmedrow {
+        display: grid;
+        grid-template-columns: 1.15fr 1.7fr 1fr 1fr;
+        gap: 0.65em;
+        padding: 0.55em 0.75em;
+        border-bottom: 1px solid var(--bd);
+        font-size: 0.65em;
+        line-height: 1.38;
+        text-align: left;
+        align-items: start;
+      }
+      .sl0 .slmedrow:last-child {
+        border-bottom: 0;
+      }
+      .sl0 .slmedrow.hd {
+        font-size: 0.55em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--acc, #7c3aed);
+        background: color-mix(in srgb, var(--acc, #7c3aed) 9%, transparent);
+      }
+      .sl0 .slmedrow b {
+        color: var(--tx);
+        font-weight: 700;
+      }
+      .sl0 .slmedrow:nth-child(even):not(.hd) {
+        background: color-mix(in srgb, var(--acc, #7c3aed) 3%, transparent);
+      }
+      .sl0 .sleva {
+        border: 1px solid var(--bd);
+        border-radius: 0.8em;
+        overflow: hidden;
+        background: var(--card);
+        box-shadow: 0 10px 28px rgba(8, 18, 48, 0.08);
+        margin: 0 0 0.45em;
+        width: 100%;
+      }
+      .sl0 .slevarow {
+        display: grid;
+        grid-template-columns: 1.15fr 1.35fr 0.95fr 1.15fr 0.85fr;
+        gap: 0.6em;
+        padding: 0.52em 0.75em;
+        border-bottom: 1px solid var(--bd);
+        font-size: 0.63em;
+        line-height: 1.35;
+        text-align: left;
+        align-items: start;
+      }
+      .sl0 .slevarow:last-child {
+        border-bottom: 0;
+      }
+      .sl0 .slevarow.hd {
+        font-size: 0.54em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--acc, #2563eb);
+        background: color-mix(in srgb, var(--acc, #2563eb) 9%, transparent);
+      }
+      .sl0 .slevarow b {
+        color: var(--tx);
+        font-weight: 700;
+      }
+      .sl0 .slevarow:nth-child(even):not(.hd) {
+        background: color-mix(in srgb, var(--acc, #2563eb) 3%, transparent);
+      }
+      .sl0 .slrisks {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.55em;
+        width: 100%;
+        margin: 0 0 0.4em;
+      }
+      .sl0 .slriskcard {
+        border: 1px solid color-mix(in srgb, #e5484d 30%, var(--bd));
+        border-top: 0.25em solid #e5484d;
+        border-radius: 0.75em;
+        background: var(--card);
+        padding: 0.6em 0.75em;
+        text-align: left;
+        font-size: 0.66em;
+        line-height: 1.4;
+        box-shadow: 0 6px 20px rgba(8, 18, 48, 0.05);
+      }
+      .sl0 .slriskcard .slrtitle {
+        font-size: 0.88em;
+        font-weight: 800;
+        color: #e5484d;
+        margin-bottom: 0.25em;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .sl0 .slriskcard .slrfix {
+        margin-top: 0.45em;
+        padding-top: 0.4em;
+        border-top: 1px dashed var(--bd);
+        color: var(--tx);
+      }
+      .sl0 .slriskcard .slrfix b {
+        color: #2f9e63;
+      }
+      @media (max-width: 560px) {
+        .mg {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1101px) and (min-height: 540px) {
+        body {
+          height: 100dvh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .wrap {
+          flex: 1;
+          min-height: 0;
+          align-items: stretch;
+          padding: 14px;
+        }
+        .side {
+          position: static;
+          height: auto;
+        }
+        main {
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+        }
+        .view.on {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+        .vw {
+          flex: 1;
+        }
+        .g2 {
+          flex: 1;
+          grid-template-rows: minmax(230px, 1fr) auto;
+        }
+        .hero {
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 20px 20px 60px 124px;
+        }
+        .hero h1 {
+          font-size: clamp(26px, min(3.6vw, 5.2vh), 50px);
+        }
+        .res {
+          align-self: stretch;
+          display: flex;
+          flex-direction: column;
+        }
+        #rl {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .rb {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" id="sp"></svg>
+    <header class="top">
+      <button
+        class="ib"
+        id="tgl"
+        data-i="menu"
+        aria-label="Mostrar u ocultar el panel izquierdo"
+      ></button>
+      <div class="lg">
+        <svg class="i"><use href="#lg" /></svg>
+        <div><b>ean</b><small>universidad</small></div>
+      </div>
+      <div class="tt">
+        <b>Gestión Curricular en Ambientes Virtuales</b
+        ><span>Posgrados M7V 2026 &nbsp;|&nbsp; Universidad EAN</span>
+      </div>
+      <label class="sr"
+        ><svg class="i"><use href="#search" /></svg
+        ><input
+          id="q"
+          placeholder="Buscar en la presentación…"
+          aria-label="Buscar"
+      /></label>
+      <button class="ib" id="bell" data-i="bell" aria-label="Notificaciones">
+        <i class="dot"></i>
+      </button>
+      <button
+        class="ib"
+        id="th"
+        data-i="sun"
+        aria-label="Cambiar tema"
+      ></button>
+      <p class="sl">Innovación hoy,<br />educación para siempre.</p>
+    </header>
+    <div class="wrap" id="wr">
+      <aside class="side card">
+        <div class="lg">
+          <svg class="i"><use href="#lg" /></svg>
+          <div><b>ean</b><small>universidad</small></div>
+        </div>
+        <h3>Trabajo de Grado</h3>
+        <ul class="inf" id="inf"></ul>
+        <q
+          >“La educación transforma realidades cuando la tecnología potencia su
+          propósito.”</q
+        >
+        <nav class="nav" id="nav"></nav>
+      </aside>
+      <main>
+        <section class="view on" id="v-inicio">
+          <div class="r1">
+            <div class="card pg">
+              <b>Avance de la Sustentación</b>
+              <div class="bar"><i id="pb"></i></div>
+              <strong id="pc"></strong><small id="pt"></small>
+            </div>
+            <div class="card sx">
+              <svg class="i" style="color: #4aa3ff"><use href="#user" /></svg
+              ><span>Participantes</span><b>125</b>
+            </div>
+            <div class="card sx">
+              <svg class="i" style="color: #3b82f6"><use href="#doc" /></svg
+              ><span>Recursos</span><b>6</b>
+            </div>
+            <div class="card sx">
+              <svg class="i" style="color: #19e0b0"><use href="#chart" /></svg
+              ><span>Resultados</span><b>92%</b>
+            </div>
+            <div class="card sx">
+              <svg class="i" style="color: #19e0b0"><use href="#target" /></svg
+              ><span>Impacto</span><b>Alto</b>
+            </div>
+          </div>
+          <div class="g2" id="g2">
+            <div class="hero">
+              <div class="lp"></div>
+              <i class="bk" style="bottom: 150px; width: 210px"></i
+              ><i class="bk" style="bottom: 100px; width: 250px"></i
+              ><i class="bk" style="bottom: 50px; width: 230px"></i>
+              <div class="eb">Universidad EAN</div>
+              <h1>Gestión Curricular<br />en Ambientes Virtuales</h1>
+              <h2>Sustentación de Trabajo de Grado</h2>
+              <p>Maestría en Innovación Educativa &nbsp;|&nbsp; 2026</p>
+              <div class="scr">
+                Ideas<br />que transforman<svg
+                  width="190"
+                  height="14"
+                  viewBox="0 0 190 14"
+                >
+                  <path d="M4 11C60 3 130 4 186 2" />
+                </svg>
+              </div>
+              <div class="ft2">
+                Innovación educativa para un futuro sin límites
+              </div>
+            </div>
+            <aside class="card res">
+              <h3 data-i="doc">Recursos Clave</h3>
+              <p>Selecciona un recurso para abrir en pantalla completa.</p>
+              <div id="rl"></div>
+              <div class="qt">
+                <i>“</i
+                ><span
+                  >El conocimiento se construye en red, pero el cambio se logra
+                  en la práctica.”</span
+                >
+              </div>
+            </aside>
+            <section class="mods">
+              <div class="mh">
+                <h3 data-i="layers">Módulos de la Presentación</h3>
+                <span
+                  ><svg class="i"><use href="#clock" /></svg>Tiempo estimado: 45
+                  min</span
+                ><button class="vl" id="vl">
+                  <svg class="i"><use href="#list" /></svg
+                  ><em style="font-style: normal">Vista de lista</em>
+                </button>
+              </div>
+              <div class="mg" id="mg"></div>
+            </section>
+          </div>
+        </section>
+        <section class="view" id="v-pres">
+          <div class="card vw">
+            <h2>Presentación</h2>
+            <div id="sl"></div>
+            <div class="dots" id="sd"></div>
+            <div class="bt" style="margin-top: 18px">
+              <button class="bn" data-t="prev">
+                <svg class="i" style="transform: scaleX(-1)">
+                  <use href="#chev" /></svg
+                >Anterior</button
+              ><button class="bn" data-t="next">
+                Siguiente<svg class="i"><use href="#chev" /></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="v-rec">
+          <div class="card vw">
+            <h2>Recursos</h2>
+            <div class="fm" style="margin-bottom: 18px">
+              <label
+                >Abrir los recursos en:<select id="rp">
+                  <option value="">
+                    Posición predeterminada de cada recurso
+                  </option>
+                  <option value="right">Panel derecho</option>
+                  <option value="left">Panel izquierdo</option>
+                  <option value="top">Panel superior</option>
+                  <option value="bottom">Panel inferior</option>
+                </select></label
+              >
+            </div>
+            <div class="rg" id="rg"></div>
+          </div>
+        </section>
+        <section class="view" id="v-not">
+          <div class="card vw">
+            <h2>Notas</h2>
+            <div class="fm">
+              <label
+                >Escribe tus apuntes de la sustentación (se guardan en este
+                navegador)<textarea
+                  id="nt"
+                  placeholder="Ideas, preguntas probables, tiempos…"
+                ></textarea>
+              </label>
+              <div><button class="bn" id="nc">Borrar notas</button></div>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="v-cfg">
+          <div class="card vw">
+            <h2>Configuración</h2>
+            <div class="fm">
+              <label
+                >Tema<select id="ts">
+                  <option value="light" selected>Claro</option>
+                  <option value="dark">Oscuro (diseño original)</option>
+                </select></label
+              >
+              <div class="bt" style="justify-content: flex-start">
+                <button class="bn" id="c1">
+                  Mostrar / ocultar panel izquierdo</button
+                ><button class="bn" id="c2">Reiniciar avance</button>
+              </div>
+            </div>
+            <ul class="gd">
+              <li>
+                <b>Guía rápida:</b> el botón ☰ oculta el panel izquierdo; el
+                menú cambia de sección; los recursos abren paneles laterales,
+                superior o inferior; las tarjetas de módulo abren un panel
+                superior con acciones.
+              </li>
+              <li>
+                <b>Herramientas:</b> la barra inferior permite avanzar
+                diapositivas, cronometrar, usar puntero láser, lápiz, zoom,
+                pantalla negra y pantalla completa. Atajos: ← →, B (pantalla
+                negra), Esc (cerrar).
+              </li>
+              <li>
+                <b>Límites conocidos:</b> la foto del encabezado está recreada
+                con formas CSS, no es la imagen original; los textos de módulos
+                y recursos son de ejemplo; el avance inicial (3 de 8) y las
+                cifras 125 / 92 % son datos de muestra; el tema claro es una
+                aproximación; la pantalla completa puede estar bloqueada dentro
+                de algunos visores.
+              </li>
+            </ul>
+          </div>
+        </section>
+        <footer class="tools card" id="tb"></footer>
+      </main>
+    </div>
+    <div class="bd" id="bd"></div>
+    <div
+      class="oc"
+      id="oc"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ot"
+    >
+      <div class="oh">
+        <h2 id="ot"></h2>
+        <button class="ib" id="ox" data-i="close" aria-label="Cerrar"></button>
+      </div>
+      <div class="ob" id="obd"></div>
+    </div>
+    <div
+      class="pdfbox"
+      id="pdfbox"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pdft"
+    >
+      <div class="pdfhead">
+        <div class="hl">
+          <h2 id="pdft">Visor de documento</h2>
+          <a class="lnk" id="pdfgo" href="#" target="_blank" rel="noopener"
+            >Abrir en pestaña nueva</a
+          >
+        </div>
+        <button
+          class="pdfclose ib"
+          id="pdfx"
+          data-i="close"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <iframe id="pdfif" title="Visor de documento"></iframe>
+    </div>
+    <canvas id="cv"></canvas><i class="las" id="las"></i>
+    <div id="blk" onclick="this.classList.remove('on')">
+      Pantalla negra · clic o B para volver
+    </div>
+    <script>
+      const $ = (s) => document.querySelector(s),
+        $$ = (s) => [...document.querySelectorAll(s)];
+      const P = {
+        menu: "M3 6h18M3 12h18M3 18h18",
+        search: '<circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4"/>',
+        bell: "M6 16v-5a6 6 0 0112 0v5l2 2H4zM10 21h4",
+        sun: '<circle cx="12" cy="12" r="4" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+        user: '<circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+        doc: "M6 3h8l4 4v14H6zM14 3v5h4M9 13h6M9 17h6",
+        bulb: "M9 18h6M10 21h4M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z",
+        clip: "M8 4h8v3H8zM6 5h12v16H6zM9 14l2 2 4-4",
+        chart: "M5 20v-8M12 20V5M19 20v-11",
+        gear: '<circle cx="12" cy="12" r="3" /><circle cx="12" cy="12" r="8" style="stroke-dasharray:3.2 2.2"/>',
+        board: "M3 4h18M5 4v10h14V4M12 14v6M9 20h6M8 11l3-3 2 2 3-3",
+        share:
+          '<circle cx="6" cy="12" r="3" /><circle cx="18" cy="6" r="3" /><circle cx="18" cy="18" r="3" /><path d="M9 11l6-4M9 13l6 4"/>',
+        help: '<circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 115 0c0 2-2.500 2-2.500 4M12 17h.01"/>',
+        book: "M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1zM12 6v14",
+        layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
+        db: '<ellipse cx="12" cy="6" rx="8" ry="3" /><path d="M4 6v12c0 2 4 3 8 3s8-1 8-3V6M4 12c0 2 4 3 8 3s8-1 8-3"/>',
+        link: "M10 14a4 4 0 005 0l3-3a4 4 0 00-5-5l-1 1M14 10a4 4 0 00-5 0l-3 3a4 4 0 005 5l1-1",
+        target:
+          '<circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.500" />',
+        home: "M3 11l9-8 9 8M5 10v10h14V10",
+        play: '<path d="M7 4l13 8-13 8z" style="fill:currentColor"/>',
+        pause: "M8 5v14M16 5v14",
+        clock: '<circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2"/>',
+        chev: "M9 6l6 6-6 6",
+        list: "M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01",
+        pen: "M4 20l4-1L19 8l-3-3L5 16zM14 7l3 3",
+        full: "M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5",
+        zoom: '<circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4M11 8v6M8 11h6"/>',
+        trash: "M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14",
+        mon: "M3 5h18v12H3zM8 21h8",
+        close: "M6 6l12 12M18 6L6 18",
+        cal: "M4 6h16v14H4zM4 10h16M8 3v4M16 3v4",
+        scale: "M12 4v16M8 20h8M5 8h14M5 8l-3 6h6zM19 8l-3 6h6z",
+        globe:
+          '<circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3.5 3.5 3.5 14.5 0 18M12 3c-3.5 3.5-3.5 14.5 0 18"/>',
+        lg: '<path d="M7.5 4.3A9 9 0 1 0 16.5 4.3" style="stroke-width:2.8;stroke-dasharray:0 4.7"/>',
+      };
+      $("#sp").innerHTML = Object.entries(P)
+        .map(
+          ([k, d]) =>
+            `<symbol id="${k}" viewBox="0 0 24 24">${d[0] == "<" ? d : `<path d="${d}"/>`}</symbol>`,
+        )
+        .join("");
+      const I = (n, c = "") => `<svg class="i ${c}"><use href="#${n}"/></svg>`,
+        ins = () =>
+          $$("[data-i]:not([data-d])").forEach((e) => {
+            e.insertAdjacentHTML("afterbegin", I(e.dataset.i));
+            e.dataset.d = 1;
+          });
+      const M = [
+        [
+          "home",
+          "Contexto e institución",
+          5,
+          "#3b82f6",
+          [
+            {
+              t: "Contexto: el ITI en una sola lectura",
+              acc: "#2f6bd8",
+              h: `<p class="sllead">El <b>Colegio Instituto Técnico Industrial Francisco José de Caldas (IED)</b>, institución oficial y gratuita de Engativá (Bogotá), opera en <b>modalidad presencial</b> en cuatro sedes y dos jornadas, con carácter técnico-industrial (art. 208, Ley 115 de 1994). Su programa de <b>educación media —grados 10.º y 11.º—</b> forma bachilleres en ocho especialidades sobre una carga de <b>40 horas semanales</b> (10 de área técnica), con población mayoritariamente de <b>estratos 1 a 3 y de primera generación en educación superior</b>: la presencialidad no es opción, es condición de base.</p>
+<div class="slstats"><div class="slstat"><b>4</b><span>Sedes</span></div><div class="slstat"><b>2</b><span>Jornadas</span></div><div class="slstat"><b>8</b><span>Especialidades</span></div><div class="slstat"><b>40 h</b><span>Por semana</span></div><div class="slstat"><b>10.º–11.º</b><span>Educación media</span></div><div class="slstat"><b>1–3</b><span>Estratos</span></div></div>
+<div class="slchips"><span class="slchip"><b>Nivel Macro:</b> Ley 115 (art. 208) · D. 1860/1994 · PEI «Líderes Industriales»</span><span class="slchip"><b>Nivel Meso:</b> SIEE (Ac. 005/2025) · Manual (Ac. 004/2025) · Media técnica</span><span class="slchip"><b>Nivel Micro:</b> Aula y taller (grados 10.º–11.º) · Mediaciones situadas</span></div>
+<p class="slsrc">Fuentes y fundamentación: Lectura curricular en tres niveles (Macro, Meso, Micro) · Casarini (2016) · PEI ITI Caldas (2025) · Manual de Convivencia ITI (2025) · SIEE (2025) · Ley 115 de 1994</p>`,
+            },
+            {
+              t: "Tensión curricular: declara ⇄ regula",
+              acc: "#e5484d",
+              h: `<div class="slbox"><b>Tensión curricular (Sacristán, 2008; Grundy, 1987):</b> El perfil institucional declara estudiantes críticos, reflexivos y conectados con los retos del mundo contemporáneo; sin embargo, a pesar de que la institución no contempla formalmente las mediaciones tecnopedagógicas en su currículo (currículo nulo), en la práctica real de la asignatura de Filosofía se emplean favorablemente por la exigencia y el reto de enseñar este tipo de conocimiento. Esta práctica real opera así como un <b>currículo oculto y en acción</b>.</div>
+<div class="slmx two">
+<div class="slcell"><span class="sltag">Declara · Currículo Prescrito / Praxis (Grundy, 1987)</span><ul><li><b>Indagadores:</b> autonomía y pensamiento crítico activo.</li><li><b>Pensadores:</b> «se prioriza el pensamiento crítico» (Manual 5.1.1).</li><li><b>Reflexivos:</b> análisis crítico de la experiencia y el entorno.</li><li><b>Visión 2029:</b> «gestión curricular centrada en tecnología avanzada».</li></ul></div>
+<div class="slcell warn"><span class="sltag">Regula · Currículo Producto / Control (Sacristán, 2008; Pérez Gómez, 2007)</span><ul><li><b>Evaluación sumativa de control:</b> 80% heteroevaluación al cierre; diagnóstico valorado por «responsabilidad y cumplimiento, mas no en dominio de competencias» (SIEE 6.1.2).</li><li><b>Tecnología confinada a gestión:</b> registro en línea, Syscolegios, correo y WhatsApp (Área de Tecnología ITI, 2025; SIEE 5.3).</li><li><b>Interpretación institucional:</b> sesgo de la norma evaluativa al control con omisión de mediaciones en el currículo formal (Glatthorn et al., 2015; Gimeno Sacristán, 2008).</li><li><b>Filosofía:</b> mediaciones tecnopedagógicas no contempladas formalmente, pero vivas en el aula.</li></ul></div>
+</div>
+<p class="slsrc">Fundamentación teórica: Gimeno Sacristán (2008, currículo prescrito vs. en acción) · Grundy (1987, producto vs. praxis) · Pérez Gómez (2007, cultura escolar) · Glatthorn et al. (2015, niveles de gobernanza) · Manual ITI 2025 · SIEE 2025</p>`,
+            },
+            {
+              t: "Marcos, márgenes de decisión y enfoque",
+              acc: "#2f9e63",
+              h: `<div class="sltbl">
+<div class="sltblcol"><div class="sltblhd">Marco externo · normativa nacional</div><div class="slrow"><b>Ley 115 de 1994</b> <span>Filosofía como área obligatoria de la media (art. 30) y autonomía escolar de áreas (art. 77).</span></div><div class="slrow"><b>Decreto 1860 de 1994</b> <span>Reglamenta el PEI, los planes de estudio y la autonomía pedagógica institucional.</span></div><div class="slrow"><b>Ley 1620 / D. 1965 de 2013</b> <span>Convivencia escolar y atención de entornos virtuales (ciberconvivencia formativa).</span></div><div class="slrow"><b>Orientaciones Filosofía MEN (Doc. 14)</b> <span>Horizontes formativos: competencias crítica, dialógica y creativa en la enseñanza filosófica.</span></div><div class="slrow"><b>Lineamientos TIC — MEN</b> <span>Uso pedagógico de tecnologías digitales y ambientes seguros para el aprendizaje.</span></div><div class="slrow"><b>Ley 2489 de 2025</b> <span>Entornos digitales sanos, seguros y constructivos; formación ética digital.</span></div><div class="slrow"><b>Decreto 0769 de 2026</b> <span>Reglamenta Ley 2489/2025: adecuación curricular de PEI, Manual y SIEE.</span></div><div class="slrow"><b>Ley 1581 de 2012</b> <span>Protección de datos personales y garantía de privacidad en entornos educativos.</span></div></div>
+<div class="sltblcol"><div class="sltblhd in">Marco interno · normativa del ITI</div><div class="slrow"><b>Manual de Convivencia 2025</b> <span>Ac. 004/2025: convivencia, perfil del estudiante y principios formativos.</span></div><div class="slrow"><b>SIEE 2025</b> <span>Ac. 005/2025: diagnóstico, valoración y promoción académica.</span></div><div class="slrow"><b>Plan de área Ciencias Sociales</b> <span>Currículo del área: propósito, contenidos y metodología docente.</span></div><div class="slrow"><b>Plan de área Filosofía</b> <span>Currículo del área: competencias filosóficas y metodología situada.</span></div></div>
+</div>
+<div class="slmx three">
+<div class="slcell"><span class="sltag">Determinado (No negociable)</span><p>Formar estudiantes <b>críticos, reflexivos y comprometidos</b>: imperativo del perfil institucional y carga de media técnica (40 h) (Glatthorn et al., 2015).</p></div>
+<div class="slcell"><span class="sltag">Negociable (Autonomía)</span><p>Diseñar y <b>concertar metodologías digitales</b> en Ciencias Sociales y Filosofía (art. 77, Ley 115), acordes con la construcción contemporánea del saber.</p></div>
+<div class="slcell warn"><span class="sltag">Margen real hoy</span><p>La práctica de Filosofía <b>ya incorpora mediaciones tecnopedagógicas</b> por exigencia del área, pero <b>sin reconocimiento, diseño ni evaluación</b> desde el currículo formal.</p></div>
+</div>
+<div class="slband">Enfoque de intervención: <b>Gestión Curricular centrada en el Diseño Tecnopedagógico</b> — Articula el saber filosófico (CK), la didáctica activa (PK) y la mediación digital (TK) bajo el modelo <b>TPACK (Mishra & Koehler, 2006; León Naranjo, 2024)</b> y estructura las presencias cognitiva, docente y social de la <b>Comunidad de Indagación (Garrison, Anderson & Archer, 2000)</b> para formalizar las prácticas que hoy operan como currículo oculto y orientarlas a la Visión 2029.</div>
+<p class="slsrc">Fundamentación: Gobernanza curricular (Glatthorn et al., 2015; Stenhouse, 1984) · Modelo TPACK (Mishra & Koehler, 2006; León Naranjo, 2024) · Comunidad de Indagación CoI (Garrison, Anderson & Archer, 2000) · MEN Doc. N.º 14</p>`,
+            },
+          ],
+        ],
+        [
+          "target",
+          "Propósito y resultados",
+          1,
+          "#fbbf24",
+          [
+            {
+              t: "Propósito formativo: qué aprenderá el estudiante",
+              acc: "#b45309",
+              h: `<div class="slbox goal"><b>Propósito formativo (qué aprenderá el estudiante):</b> Desarrollar el <b>pensamiento crítico, reflexivo y argumentativo</b> en el estudiante a través del <b>análisis de problemas filosóficos</b> mediados por <b>herramientas digitales</b> en el contexto contemporáneo.</div>
+<div class="slmx three">
+<div class="slcell"><span class="sltag">Pensar · Analizar (Bloom 4)</span><p><b>Analizar problemas filosóficos</b> clásicos y contemporáneos mediante investigación rigurosa en entornos digitales (Arauz Rodríguez, 2023).</p></div>
+<div class="slcell"><span class="sltag">Argumentar · Crear (Bloom 5–6)</span><p><b>Argumentar tesis filosóficas propias</b> utilizando herramientas interactivas y multimedia orientadas al diálogo crítico (Jerez Yáñez, 2012).</p></div>
+<div class="slcell"><span class="sltag">Evaluar · Juzgar (Bloom 5)</span><p><b>Evaluar la validez de discursos</b> mediante plataformas colaborativas y curaduría crítica de la información (Marzano & Kendall, 2007).</p></div>
+</div>
+<div class="slband"><b>Condición de diseño tecnopedagógico (enclave curricular):</b> Visibilizar y formalizar las prácticas tecnopedagógicas reales que emergen como currículo en acción en el aula frente a la omisión oficial, andamiando la presencia docente y cognitiva (Garrison, Anderson & Archer, 2000; Mishra & Koehler, 2006; León Naranjo, 2024; Gimeno Sacristán, 2008).</div>
+<p class="slsrc">Fundamentación: Biggs & Tang (2011) · Modelo TPACK (Mishra & Koehler, 2006; León Naranjo, 2024) · Comunidad de Indagación CoI (Garrison, Anderson & Archer, 2000) · Gimeno Sacristán (2008) · MEN Doc. N.º 14</p>`,
+            },
+            {
+              t: "Resultados de aprendizaje: verbo, condición, nivel y evidencia",
+              acc: "#b45309",
+              h: `<div class="slra">
+<div class="slrarow hd"><span>Resultado de Aprendizaje · Verbo observable + Contenido + Condición</span><span>Nivel de desempeño</span><span>Evidencia demostrable</span></div>
+<div class="slrarow"><span><b>RA1</b> <span class="slcomp">Verbo</span> <b>Analiza</b> <span class="slcomp">Contenido</span> <u>problemas filosóficos clásicos</u> <span class="slcomp">Condición</span> empleando entornos digitales de investigación en la práctica real de aula para contrastar perspectivas teóricas frente a la omisión curricular institucional.</span><span><b>Análisis crítico y conceptual avanzado</b><br><small style="color:var(--mut);font-weight:600">Bloom revisado: Analizar (Nivel 4 superior)</small></span><span><b>Ensayo argumentativo digital</b> con contraste de fuentes y registro de la práctica real.</span></div>
+<div class="slrarow"><span><b>RA2</b> <span class="slcomp">Verbo</span> <b>Argumenta</b> <span class="slcomp">Contenido</span> <u>tesis filosóficas propias</u> <span class="slcomp">Condición</span> utilizando herramientas de producción interactiva y multimedia como mediación emergente para comunicar posturas críticas frente a la era digital.</span><span><b>Producción y argumentación digital</b><br><small style="color:var(--mut);font-weight:600">Bloom revisado: Evaluar / Crear (Nivel 5–6)</small></span><span><b>Pódcast o debate multimedia</b> sustentado basado en la práctica real del aula.</span></div>
+<div class="slrarow"><span><b>RA3</b> <span class="slcomp">Verbo</span> <b>Evalúa</b> <span class="slcomp">Contenido</span> <u>la validez de discursos contemporáneos</u> <span class="slcomp">Condición</span> mediante el uso de plataformas colaborativas y de curaduría de información que operan al margen del currículo formal para fundamentar su juicio crítico.</span><span><b>Comprensión y mediación filosófica</b><br><small style="color:var(--mut);font-weight:600">Taxonomía Bloom: Evaluar (Nivel 5) · Juicio fundado</small></span><span><b>Matriz de curaduría y contraargumentación</b> colaborativa aplicada.</span></div>
+</div>
+<div class="slband" style="font-size:0.75em;padding:0.45em 0.85em;margin-top:0.3em">Alineación con la tensión curricular: cada resultado formaliza una mediación que hoy opera como currículo oculto — <b>RA1:</b> investigación rigurosa · <b>RA2:</b> producción multimedia · <b>RA3:</b> curaduría colaborativa crítica.</div>
+<p class="slsrc">Fundamentación y operacionalización: Jerez Yáñez (2012, formulación tridimensional) · Marzano & Kendall (2007, precisión taxonómica) · Arauz Rodríguez (2023, Taxonomía Bloom revisada) · Biggs & Tang (2011, alineamiento constructivo: evidencia previa a la actividad)</p>`,
+            },
+          ],
+        ],
+        [
+          "layers",
+          "Modelo y secuencia",
+          2,
+          "#0d9488",
+          [
+            {
+              t: "Modelo curricular: argumentos teórico, contextual y tecnopedagógico",
+              acc: "#0d9488",
+              h: `<div class="slbox" style="--acc:#0d9488;border-left-color:#0d9488"><b>Modelo elegido:</b> Modelo práctico organizado por problemas y tareas, estructurado en competencias situadas y resultados de aprendizaje verificables (Grundy, 1987; Ellis, 2003; Biggs & Tang, 2011). <i>«Los contenidos no preceden a la práctica: emergen de ella»</i>.</div>
+<div class="slmx two">
+<div class="slcell"><span class="sltag" style="--acc:#0d9488">Argumento teórico y descartes</span><ul><li><b>Praxis curricular (Grundy, 1987):</b> El currículo no es un paquete normativo de contenidos cerrados (producto), sino una práctica reflexiva deliberada orientada a la autonomía crítica.</li><li><b>Aprendizaje por tareas situadas (Ellis, 2003; McClelland, 1973):</b> Las competencias se demuestran en desempeños observables en contexto y no en acumulación declarativa.</li><li><b>Alineamiento constructivo (Biggs & Tang, 2011):</b> Congruencia absoluta entre tarea, evidencia y resultado evaluable.</li><li><b>Descartes explícitos:</b> Se descarta el <i>modelo técnico sumativo</i> (memorístico) y el <i>sociocrítico puro</i> (incompatible con la titulación y restricciones del perfil ITI).</li></ul></div>
+<div class="slcell"><span class="sltag" style="--acc:#0d9488">Argumento contextual ITI</span><ul><li><b>Vocación práctica del ITI:</b> 10 horas semanales de taller y articulación con SENA/ECCI; el modelo generaliza esa lógica práctica al área de Filosofía.</li><li><b>Sustentación de trabajo de grado:</b> Es la única situación integradora vigente en la media técnica; el modelo entrena esa capacidad desde el inicio y no solo al cierre (Acuerdo 005 de 2025; PEI ITI Caldas).</li><li><b>Práctica real del aula:</b> Formaliza las dinámicas de debate y mediación emergente que los docentes ya aplican frente a la omisión del currículo oficial.</li><li><b>Alineación con el SIEE:</b> Articula las evidencias de desempeño con el sistema de valoración institucional (80/10/10).</li></ul></div>
+</div>
+<div class="slband" style="--acc:#0d9488;border-left-color:#0d9488"><b>Fundamentación tecnopedagógica integrada (TPACK & CoI):</b> Se articula el modelo <b>TPACK (Mishra & Koehler, 2006; León Naranjo, 2024)</b> —integrando sinérgicamente el saber filosófico (CK), la didáctica activa (PK) y las mediaciones digitales (TK)— junto a la <b>Comunidad de Indagación (Garrison, Anderson & Archer, 2000)</b>, garantizando presencia docente, cognitiva y social en la experiencia formativa.</div>
+<p class="slsrc">Fundamentación: Grundy (1987) · Ellis (2003) · Biggs & Tang (2011) · Modelo TPACK (Mishra & Koehler, 2006; León Naranjo, 2024) · Modelo CoI (Garrison, Anderson & Archer, 2000)</p>`,
+            },
+            {
+              t: "Secuencia formativa: etapas, dependencia estricta y progresión",
+              acc: "#0d9488",
+              h: `<div class="slflow">
+<div class="slstage"><div class="slstagehd">1 · Indagación y Exploración</div><div class="slstagesub">Semanas 1–5 · Periodo 1 · RA1</div><div class="slstagelogro">Analiza problemas filosóficos clásicos mediante investigación documental en entornos digitales, contrastando fuentes rigurosas.</div><div class="slstageprod"><b>Produce:</b> Ficha analítica de investigación y contraste de fuentes.</div></div>
+<div class="slarrow">→</div>
+<div class="slstage"><div class="slstagehd">2 · Producción y Diálogo</div><div class="slstagesub">Semanas 6–11 · Periodo 2 · RA2</div><div class="slstagelogro">Argumenta tesis filosóficas propias empleando herramientas interactivas y multimedia orientadas al diálogo crítico.</div><div class="slstageprod"><b>Consume:</b> Ficha de Etapa 1<br><b>Produce:</b> Pódcast o debate multimedia sustentado + Guion de réplicas.</div></div>
+<div class="slarrow">→</div>
+<div class="slstage final"><div class="slstagehd">3 · Desempeño Integrado</div><div class="slstagesub">Semanas 12–16 · Periodo 3 · RA3</div><div class="slstagelogro">Evalúa la validez de discursos en red mediante curaduría colaborativa y defiende su juicio crítico en panel público.</div><div class="slstageprod"><b>Consume:</b> Pódcast y réplicas de Etapa 2<br><b>Produce:</b> Matriz de curaduría colaborativa y sustentación pública.</div></div>
+</div>
+<div class="slband" style="--acc:#0d9488;border-left-color:#0d9488;font-size:0.75em;padding:0.45em 0.85em"><b>Autonomía gradual y andamiaje cognitivo (sin saltos):</b> De la observación y análisis guiado con rúbrica compartida (Etapa 1), a la deliberación en pares con andamiaje medio (Etapa 2), hasta la transferencia autónoma situada en panel público (Etapa 3), mitigando la sobrecarga cognitiva (Clark, Kirschner & Sweller, 2022; Vygotsky, 2022).</div>
+<p class="slsrc">Fundamentación: Dependencia de insumos y progresión constructiva (Ellis, 2003; Biggs & Tang, 2011) · Carga cognitiva y ZDP (Clark et al., 2022; Vygotsky, 2022) · Ciclo de Indagación Práctica (Garrison, Anderson & Archer, 2000) · TPACK (León Naranjo, 2024)</p>`,
+            },
+          ],
+        ],
+        [
+          "link",
+          "Mediaciones",
+          1,
+          "#8b5cf6",
+          [
+            {
+              t: "Mediaciones tecnopedagógicas en Blended Learning",
+              acc: "#7c3aed",
+              h: `<div class="slbox" style="--acc:#7c3aed;border-left-color:#7c3aed"><b>Modelo Blended Learning (b-learning):</b> En una institución oficial presencial de base (ITI Caldas, estratos 1–3), la tecnopedagogía articula el aula presencial dialógica con la mediación virtual asincrónica de bajo consumo, integrando saber filosófico (CK), didáctica activa (PK) y herramientas digitales (TK) bajo el modelo <b>TPACK (Mishra & Koehler, 2006; León Naranjo, 2024)</b>.</div>
+<div class="slmed">
+<div class="slmedrow hd"><span>Etapa · Logro formativo</span><span>Mediación Tecnopedagógica (B-Learning)</span><span>Autonomía y andamiaje</span><span>Tipo de interacción</span></div>
+<div class="slmedrow"><span><b>1 · Indagación</b><br><small style="color:var(--mut);font-weight:600">S1–5 · RA1: Analizar</small></span><span><b>Ficha analítica de investigación y curaduría digital guiada</b> (baja carga / móvil), contrastando fuentes filosóficas clásicas y contemporáneas.</span><span><b>Andamiaje alto:</b> modelado docente de criterios de fiabilidad de fuentes.</span><span><b>Individual con tutoría</b> y acompañamiento docente puntual (Presencia Docente).</span></div>
+<div class="slmedrow"><span><b>2 · Producción</b><br><small style="color:var(--mut);font-weight:600">S6–11 · RA2: Argumentar</small></span><span><b>Laboratorio de producción de audio/pódcast dialógico</b> en parejas (notas de voz / audio liviano) con guion de réplicas y rúbrica compartida.</span><span><b>Andamiaje medio:</b> trabajo colaborativo en pares y pautas estructuradas.</span><span><b>Pares y retroalimentación</b> dialógica formativa del tutor (Presencia Social y Cognitiva).</span></div>
+<div class="slmedrow"><span><b>3 · Desempeño</b><br><small style="color:var(--mut);font-weight:600">S12–16 · RA3: Evaluar</small></span><span><b>Matriz de curaduría colaborativa en red</b> y panel de sustentación dialógica en vivo (presencial/sincrónico) con réplicas y defensa pública.</span><span><b>Desempeño autónomo:</b> transferencia situada a problemas contemporáneos.</span><span><b>Grupal situada</b> y debate dialógico abierto (Comunidad de Indagación plena).</span></div>
+</div>
+<div class="slband" style="--acc:#7c3aed;border-left-color:#7c3aed;font-size:0.75em;padding:0.45em 0.85em"><b>Regla de pertinencia tecnopedagógica:</b> «Una mediación es pertinente cuando exige la misma operación cognitiva que el resultado que dice entrenar» (Biggs & Tang, 2011; Mishra & Koehler, 2006). Toda evidencia final fue previamente entrenada por su mediación.</div>
+<p class="slsrc">Fundamentación: Modelo TPACK (Mishra & Koehler, 2006; León Naranjo, 2024) · Taxonomía Digital de Bloom (Churches, 2008) · E-moderación (García Peñalvo & Seoane-Pardo, 2021) · Biggs & Tang (2011)</p>`,
+            },
+            {
+              t: "Presencias CoI, riesgos virtuales y diseño de bajo consumo",
+              acc: "#7c3aed",
+              h: `<div class="slmx three">
+<div class="slcell" style="--acc:#7c3aed"><span class="sltag" style="--acc:#7c3aed">Presencia Cognitiva</span><p>Sostenida en el <b>Ciclo de Indagación Práctica</b> (Garrison et al., 2000): evento detonante, exploración, integración y resolución. Entrena el pensamiento crítico real y evita la pasividad.</p></div>
+<div class="slcell" style="--acc:#7c3aed"><span class="sltag" style="--acc:#7c3aed">Presencia Social</span><p>Clima de confianza comunicativa para expresar posturas propias, deliberar en pares en el pódcast y contraargumentar discursos contemporáneos sin descalificación personal.</p></div>
+<div class="slcell" style="--acc:#7c3aed"><span class="sltag" style="--acc:#7c3aed">Presencia Docente</span><p>Diseño tecnopedagógico previo, andamiaje explícito mediante rúbricas públicas desde el inicio y facilitación del diálogo socrático tanto en aula presencial como en red.</p></div>
+</div>
+<div class="slrisks">
+<div class="slriskcard"><div class="slrtitle">Brecha y acceso digital</div><p>Población estratos 1–3 con datos móviles intermitentes y sin computador exclusivo.</p><div class="slrfix"><b>Ajuste previsto:</b> Diseño de bajo consumo (audios/notas de voz, textos livianos descargables), asincronía con hitos y respaldo offline en aula.</div></div>
+<div class="slriskcard"><div class="slrtitle">Simplificación del logro</div><p>Riesgo de reducir la mediación a repositorios o cuestionarios pasivos de opción múltiple.</p><div class="slrfix"><b>Ajuste previsto:</b> Consignas con información incompleta, dilemas reales y producción activa; la mediación exige la misma operación del resultado.</div></div>
+<div class="slriskcard"><div class="slrtitle">Evaluación documental</div><p>Riesgo de calificar el formato o la estética del archivo en lugar de la defensa dialógica.</p><div class="slrfix"><b>Ajuste previsto:</b> Panel dialógico con preguntas imprevistas; la rúbrica evalúa la justificación y solidez de la réplica, no el archivo decorativo.</div></div>
+</div>
+<div class="slband" style="--acc:#7c3aed;border-left-color:#7c3aed;font-size:0.75em;padding:0.45em 0.85em"><b>Criterio de viabilidad contextual:</b> «Si una mediación exige banda ancha permanente o computador exclusivo, no es viable en el contexto socioeconómico del ITI: convierte la brecha digital en barrera de aprendizaje» (Bates, 2019; Area Moreira, 2017).</div>
+<p class="slsrc">Fundamentación: Modelo Community of Inquiry (Garrison, Anderson & Archer, 2000, 2001) · Brecha digital y equidad formativa (Bates, 2019; Area Moreira, 2017) · Carga cognitiva (Clark, Kirschner & Sweller, 2022)</p>`,
+            },
+          ],
+        ],
+        [
+          "chart",
+          "Evaluación",
+          1,
+          "#2563eb",
+          [
+            {
+              t: "Sistema de evaluación institucional y evidencias de aprendizaje",
+              acc: "#2563eb",
+              h: `<div class="slbox" style="--acc:#2563eb;border-left-color:#2563eb"><b>Evaluación integral por competencias (SIEE ITI Caldas, Acuerdo 005 de 2025):</b> La competencia institucional se define desde la interacción indisoluble de tres dimensiones: <b>SABER</b> (Cognoscitivo: comprensión conceptual), <b>HACER</b> (Expresivo: aplicación, argumentación dialógica y producción multimedia) y <b>SER</b> (Afectivo: valorado desde el <i>Perfil del Estudiante del Manual de Convivencia</i>: indagadores, pensadores, reflexivos e íntegros). Escala nacional D. 1290/2009 (1.0 a 5.0, aprobación ≥ 3.0) y ponderación institucional inamovible: <b>80% Heteroevaluación · 10% Coevaluación · 10% Autoevaluación</b>.</div>
+<div class="sleva">
+<div class="slevarow hd"><span>Resultado · Dimensión SIEE</span><span>Evidencia final auténtica</span><span>Nivel aceptable (D. 1290)</span><span>Instrumento de evaluación</span><span>Momento · Ponderación</span></div>
+<div class="slevarow"><span><b>RA1 · Analizar problemas clásicos</b><br><small style="color:var(--mut);font-weight:600">SABER: Comprensión conceptual<br>SER: Indagador e instruido</small></span><span><b>Ensayo argumentativo digital</b> con contraste de fuentes y registro de la práctica real de aula.</span><span><span class="slchip in" style="font-size:0.85em;padding:0.2em 0.5em"><b>Alto (≥ 4.0)</b></span><br>Contrasta mínimo 2 autores clásicos con rigor conceptual y dilemas contemporáneos.</span><span><b>Rúbrica analítica</b> con descriptores de coherencia epistémica, rigor hermenéutico y curaduría crítica.</span><span><b>Corte 1 (Sem. 1–5)</b><br>25% Hetero (alimentado por fichas previas de lectura).</span></div>
+<div class="slevarow"><span><b>RA2 · Argumentar tesis propias</b><br><small style="color:var(--mut);font-weight:600">HACER: Producción dialógica<br>SER: Buen comunicador e íntegro</small></span><span><b>Pódcast o debate multimedia sustentado</b> basado en situaciones de la práctica real frente a la era digital.</span><span><span class="slchip in" style="font-size:0.85em;padding:0.2em 0.5em"><b>Alto (≥ 4.0)</b></span><br>Sostiene tesis crítica propia respondiendo a contraargumentos dialógicos.</span><span><b>Rúbrica analítica</b> de deliberación dialógica, oralidad tecnopedagógica y estructura de tesis.</span><span><b>Corte 2 (Sem. 6–11)</b><br>25% Hetero + <b>10% Coevaluación</b> formativa en pares de notas de voz.</span></div>
+<div class="slevarow"><span><b>RA3 · Evaluar discursos y juicios</b><br><small style="color:var(--mut);font-weight:600">SER + SABER + HACER integrados<br>Pensador crítico y reflexivo</small></span><span><b>Matriz de curaduría y contraargumentación</b> aplicada en panel deliberativo presencial/digital.</span><span><span class="slchip in" style="font-size:0.85em;padding:0.2em 0.5em;background:rgba(37,99,235,0.15);color:#2563eb;border-color:#2563eb"><b>Superior (≥ 4.6)</b></span><br>Formula juicio epistémico autónomo sobre sesgos y mediaciones digitales.</span><span><b>Rúbrica analítica multidimensional</b> (criterios articulados de SER reflexivo, SABER crítico y HACER expresivo).</span><span><b>Corte 3 (Sem. 12–16)</b><br>30% Hetero + <b>10% Autoevaluación</b> metacognitiva del proceso.</span></div>
+</div>
+<div class="slband" style="--acc:#2563eb;border-left-color:#2563eb;font-size:0.73em;padding:0.45em 0.85em"><b>Evaluación progresiva en resultados complejos:</b> Ninguna evidencia final se califica de forma sorpresiva o descontextualizada. Cada evidencia auténtica se construye mediante <b>tres entregas parciales andamiadas</b> (ficha conceptual preliminar → guion de audio con retroalimentación dialógica → borrador de matriz), asegurando reorientación formativa oportuna antes de la calificación sumativa.</div>
+<p class="slsrc">Fuentes y fundamentación: Sistema Institucional de Evaluación de Estudiantes - SIEE ITI Caldas (2025, Ac. 005) · Manual de Convivencia ITI Caldas (2025, Ac. 004, Perfil del Estudiante) · Decreto 1290 de 2009 · Biggs & Tang (2011, alineamiento constructivo).</p>`,
+            },
+            {
+              t: "Aula virtual analítica, coherencia sistémica y evaluación curricular",
+              acc: "#2563eb",
+              h: `<div class="slmx three">
+<div class="slcell" style="--acc:#2563eb"><span class="sltag" style="--acc:#2563eb">Aula virtual y analítica formativa</span><ul><li><b>Tecnopedagogía del aula virtual:</b> No opera como repositorio pasivo ni sistema de control administrativo, sino como entorno dialógico de mediación y andamiaje cognitivo (B-Learning).</li><li><b>Analítica de aprendizaje continua:</b> Registra la trazabilidad de entregas intermedias (borradores, notas de voz, foros asincrónicos) para detectar alertas tempranas de rezago antes del cierre de periodo.</li><li><b>Alimentación del 80/10/10:</b> Transforma el 80% de heteroevaluación en un proceso formativo continuo (no punitivo), aportando insumos objetivos para la coevaluación (10%) y autoevaluación (10%).</li></ul></div>
+<div class="slcell" style="--acc:#2563eb"><span class="sltag" style="--acc:#2563eb">Coherencia sistémica y ajuste</span><ul><li><b>Triangulación estricta:</b> Alineamiento constructivo entre <b>Lo propuesto (RAs)</b> ⇄ <b>Lo practicado (Mediaciones y secuencia)</b> ⇄ <b>Lo evaluado (Evidencias y rúbricas)</b> (Biggs & Tang, 2011; Sunberg, 2022).</li><li><b>Control de sesgos:</b> Erradica la <i>sub-medición</i> (evaluar pensamiento crítico con pruebas memorísticas) y la <i>sobre-exigencia</i> (evaluar habilidades multimedia sin andamiaje previo).</li><li><b>Ajuste documentado:</b> Se descartó el examen escrito de selección múltiple por sub-medir la argumentación filosófica; se sustituyó por tareas integradas auténticas (ensayo digital, pódcast y panel).</li></ul></div>
+<div class="slcell" style="--acc:#2563eb"><span class="sltag" style="--acc:#2563eb">Evaluación curricular del piloto</span><ul><li><b>Evaluación integral del diseño:</b> Valora la eficacia y viabilidad del currículo tecnopedagógico mismo, no únicamente el rendimiento del estudiante (Patton, 2008; Fullan, 2013).</li><li><b>Indicadores de viabilidad técnica:</b> Tasa de completitud en dispositivos móviles con baja conectividad; porcentaje de entregas asincrónicas ligeras sin exclusión económica.</li><li><b>Impacto en la cultura escolar:</b> Encuestas de percepción docente/estudiantil sobre mediación virtual frente a presencialidad y triangulación del perfil de egreso (indagador, reflexivo).</li></ul></div>
+</div>
+<div class="slband" style="--acc:#2563eb;border-left-color:#2563eb;font-size:0.73em;padding:0.45em 0.85em"><b>Principio de coherencia evaluativa (Biggs & Tang, 2011; Sunberg, 2022):</b> La validez del modelo evaluativo reside en que cada instrumento mida exactamente el nivel cognitivo y procedimental entrenado en las mediaciones, garantizando que la nota institucional refleje el aprendizaje real y no las brechas de conectividad del hogar.</div>
+<p class="slsrc">Fundamentación: Biggs & Tang (2011, alineamiento constructivo) · Sunberg (2022, coherencia de la evaluación) · Patton (2008, evaluación orientada a la utilización) · Fullan (2013, sostenibilidad del cambio educativo) · Siemens (2013, analítica del aprendizaje).</p>`,
+            },
+          ],
+        ],
+        [
+          "share",
+          "Coordinación y sostenibilidad",
+          6,
+          "#19b37a",
+          [
+            "Actores y participación real en las decisiones.",
+            "Mecanismo de coordinación con actas e indicadores.",
+            "Producto: invariantes, umbrales y regla de ajuste.",
+          ],
+        ],
+        [
+          "book",
+          "Fundamentación integrada",
+          5,
+          "#f59e0b",
+          [
+            "Referentes teóricos, normativos e institucionales.",
+            "Trazabilidad de cada decisión curricular.",
+            "Producto: verificación de coherencia y entrega.",
+          ],
+        ],
+        [
+          "help",
+          "Verificación de coherencia y entrega",
+          4,
+          "#ef6b8a",
+          [
+            "Revisión de rupturas entre propósito, resultados y evidencia.",
+            "Límites: diseño no pilotado y validación pendiente.",
+            "Cierre y conversación con la tutoría.",
+          ],
+        ],
+      ];
+      const EXTERNAL = [
+        [
+          "Decreto 0769 de 2026",
+          "2.Docs/Decreto 0769 de 2026/Decreto 0769 de 2026.pdf",
+        ],
+        [
+          "Decreto 1965 de 2013",
+          "2.Docs/Decreto-1965-de-2013-Gestor-Normativo/Decreto-1965-de-2013-Gestor-Normativo.pdf",
+        ],
+        ["Decreto 1860 de 1994", "2.Docs/decreto1860_94/decreto1860_94.pdf"],
+        [
+          "Ley 115 de febrero 8 de 1994",
+          "2.Docs/Ley 115 de Febrero 8 de 1994/Ley 115 de Febrero 8 de 1994.pdf",
+        ],
+        [
+          "Ley 1581 de 2012",
+          "2.Docs/Ley-1581-de-2012-Gestor-Normativo/Ley-1581-de-2012-Gestor-Normativo.pdf",
+        ],
+        [
+          "Ley 1620 de 2013",
+          "2.Docs/Ley-1620-de-2013-Gestor-Normativo/Ley-1620-de-2013-Gestor-Normativo.pdf",
+        ],
+        [
+          "Ley 2489 de 2025",
+          "2.Docs/Ley_2489_de_2025_Congreso_de_la_República/Ley_2489_de_2025_Congreso_de_la_República.pdf",
+        ],
+        [
+          "Orientaciones pedagógicas para la Filosofía",
+          "2.Docs/Orientaciones Pedagógicas para la Filosofía en Ia Educación Media/Orientaciones Pedagógicas para la Filosofía en Ia Educación Media.pdf",
+        ],
+      ];
+      const INTERNAL = [
+        [
+          "SIEE Colegio Instituto Técnico Industrial Francisco José de Caldas",
+          "https://online.fliphtml5.com/tnnks/rygr/",
+        ],
+        [
+          "Manual de Convivencia ITI 2025",
+          "https://online.fliphtml5.com/tnnks/mphb/",
+        ],
+        [
+          "Plan de área Ciencias Sociales",
+          "https://online.fliphtml5.com/tnnks/Plan-de-area-Ciencias-Sociales-2026/",
+        ],
+        ["Plan de área Filosofía", "https://online.fliphtml5.com/tnnks/svpd/"],
+      ];
+      const VIEWER = "VISOR_PDF/1.PDF.JS/web/viewer.html";
+      const DOCS = [
+        {
+          t: "marco externo",
+          ic: "scale",
+          items: EXTERNAL.map(([n, p]) => [
+            n,
+            VIEWER + "?file=" + encodeURIComponent("../../" + p),
+            "PDF · visor integrado",
+          ]),
+        },
+        {
+          t: "marco interno",
+          ic: "globe",
+          items: INTERNAL.map(([n, p]) => [n, p, "Documento en línea"]),
+        },
+      ];
+      const R = [
+        [
+          "book",
+          "marco externo",
+          "b1",
+          "right",
+          "Normativa nacional y orientaciones pedagógicas que encuadran la gestión curricular.",
+          [
+            "Leyes y decretos aplicables",
+            "Convivencia e inclusión",
+            "Orientaciones para Filosofía",
+          ],
+        ],
+        [
+          "layers",
+          "marco interno",
+          "b2",
+          "left",
+          "Documentos institucionales y planes de área del ITI.",
+          [
+            "SIEE institucional",
+            "Manual de Convivencia 2025",
+            "Planes de área",
+          ],
+        ],
+        [
+          "chart",
+          "Caso de Estudio: Innovación",
+          "b3",
+          "top",
+          "Experiencia de innovación curricular analizada.",
+          [
+            "Contexto institucional",
+            "Intervención y prototipos",
+            "Resultados y evidencias",
+          ],
+        ],
+        [
+          "doc",
+          "Guía de Presentación Final",
+          "b4",
+          "bottom",
+          "Orientaciones para preparar y exponer la sustentación.",
+          [
+            "Estructura sugerida para 45 minutos",
+            "Uso de la barra de herramientas",
+            "Preparación de la sesión de preguntas",
+          ],
+        ],
+        [
+          "db",
+          "Repositorio de Datos",
+          "b5",
+          "right",
+          "Datos recolectados con los instrumentos del estudio.",
+          [
+            "Respuestas de participantes",
+            "Tablas y gráficos",
+            "Notas metodológicas",
+          ],
+        ],
+        [
+          "link",
+          "Material Complementario",
+          "b6",
+          "left",
+          "Lecturas y enlaces de apoyo.",
+          [
+            "Artículos de referencia",
+            "Normativa y lineamientos",
+            "Herramientas de aula virtual",
+          ],
+        ],
+      ];
+      $("#inf").innerHTML = [
+        ["user", "Expositor Principal:", "Oscar Javier Murcia Hernández"],
+        ["user", "Profesor/Tutor:", "Juan Manuel Medina Barrera"],
+        ["home", "Institución:", "Universidad EAN"],
+        ["cal", "Programa Académico:", "Maestría en Innovación Educativa"],
+        ["cal", "Asignatura:", "Gestión Curricular en Ambientes Virtuales"],
+        ["cal", "Año:", "2026"],
+        ["cal", "Semestre:", "I-2026"],
+      ]
+        .map((a) => `<li>${I(a[0])}<span>${a[1]}<b>${a[2]}</b></span></li>`)
+        .join("");
+      $("#nav").innerHTML = [
+        ["inicio", "home", "Inicio"],
+        ["pres", "board", "Presentación"],
+        ["rec", "doc", "Recursos"],
+        ["not", "clip", "Notas"],
+        ["cfg", "gear", "Configuración"],
+      ]
+        .map(
+          (a) =>
+            `<button class="nv${a[0] == "inicio" ? " on" : ""}" data-v="${a[0]}">${I(a[1])}${a[2]}</button>`,
+        )
+        .join("");
+      const rbtn = (r, i, big) =>
+        `<button class="rb ${r[2]}" data-r="${i}">${I(r[0])}<span><b>${r[1]}</b><small>Ver contenido</small></span>${I("chev")}</button>`;
+      $("#rl").innerHTML = $("#rg").innerHTML = R.map(rbtn).join("");
+      $("#mg").innerHTML = M.map(
+        (m, i) =>
+          `<button class="mc${i ? "" : " act"}" data-m="${i}" style="--c:${m[3]}"><span class="ar">${I("chev")}</span>${I(m[0], "mi")}<small>0${i + 1}</small><b>${m[1]}</b><div class="ft"><span class="tm">${I("clock")}${m[2]} min</span><em class="st">Pendiente</em></div></button>`,
+      ).join("");
+      $("#tb").innerHTML =
+        `<div class="pb"><button class="pp" data-t="pp" id="pp" aria-label="Iniciar o pausar"></button><div><b>Sustentación de Trabajo de Grado</b><small>Gestión Curricular en Ambientes Virtuales</small></div></div><i class="sep"></i>` +
+        [
+          ["prev", "chev", "Anterior"],
+          ["next", "chev", "Siguiente"],
+        ]
+          .map(
+            (t) =>
+              `<button class="tl" data-t="${t[0]}">${I(t[1], t[0] == "prev" ? "fl" : "")}${t[2]}</button>`,
+          )
+          .join("") +
+        `<button class="tl" id="cn" data-t="go">1/8</button><i class="sep"></i><button class="tl" id="tm" data-t="pp" title="Cronómetro regresivo">45:00</button><button class="tl" data-t="rst">${I("clock")}Reiniciar</button><i class="sep"></i>` +
+        [
+          ["laser", "target", "Láser"],
+          ["pen", "pen", "Lápiz"],
+          ["clr", "trash", "Borrar"],
+          ["zoom", "zoom", "Zoom"],
+          ["blk", "mon", "Negro"],
+          ["full", "full", "Completa"],
+        ]
+          .map(
+            (t) =>
+              `<button class="tl" data-t="${t[0]}">${I(t[1])}${t[2]}</button>`,
+          )
+          .join("") +
+        `<span class="tg">Formación que impulsa comunidades más humanas.</span><button class="go" data-t="start">${I("play")}Iniciar presentación</button>`;
+      $$(".fl").forEach((e) => (e.style.transform = "scaleX(-1)"));
+      ins();
+      let done = 3,
+        cur = 0,
+        cm = 0,
+        run = 0,
+        iv,
+        T = 2700,
+        S = M.map((_, i) => (i ? "Pendiente" : "En curso")),
+        pos = null;
+      const oc = $("#oc"),
+        bd = $("#bd");
+      function oo(p, t, h) {
+        oc.className = "oc " + p;
+        $("#ot").textContent = t;
+        $("#obd").innerHTML = h;
+        $("#obd").className = "ob";
+        oc.offsetWidth;
+        oc.classList.add("show");
+        bd.classList.add("show");
+        $("#ox").focus();
+      }
+      function cl() {
+        oc.classList.remove("show");
+        bd.classList.remove("show");
+      }
+      bd.onclick = $("#ox").onclick = cl;
+      const pbox = $("#pdfbox");
+      function docOpen(url, title) {
+        $("#pdft").textContent = title;
+        $("#pdfgo").href = url;
+        $("#pdfif").src = url;
+        pbox.classList.add("show");
+      }
+      function docClose() {
+        pbox.classList.remove("show");
+        $("#pdfif").removeAttribute("src");
+      }
+      $("#pdfx").onclick = docClose;
+      function marco(i) {
+        const g = DOCS[i];
+        oo(
+          "full",
+          g.t,
+          `<p class="dcap">${R[i][4]}</p><div class="resource-grid docgrid">${g.items
+            .map(
+              (it, j) =>
+                `<button class="resource-card" data-doc="${i}:${j}">${I(g.ic)}<b>${it[0]}</b><small>${it[2]}</small></button>`,
+            )
+            .join("")}</div>`,
+        );
+        $("#obd").className = "ob center";
+      }
+      function paint() {
+        const n = Math.round((done / 8) * 100);
+        $("#pb").style.width = n + "%";
+        $("#pc").textContent = n + "%";
+        $("#pt").textContent = done + " de 8 secciones completadas";
+        $$(".mc").forEach((c, i) => {
+          const e = c.querySelector(".st");
+          e.textContent = S[i];
+          e.className =
+            "st " +
+            (S[i] == "En curso" ? "e" : S[i] == "Completado" ? "d" : "");
+          c.classList.toggle("act", S[i] == "En curso");
+        });
+      }
+      function sv(v) {
+        $$(".view").forEach((e) => e.classList.toggle("on", e.id == "v-" + v));
+        $$(".nv").forEach((e) => e.classList.toggle("on", e.dataset.v == v));
+        scrollTo(0, 0);
+        if (innerWidth < 900) document.body.classList.add("nosb");
+      }
+      function sd(i) {
+        cur = Math.max(0, Math.min(7, i));
+        const m = M[cur];
+        $("#sl").innerHTML =
+          `<small>Módulo 0${cur + 1} de 08</small><h3>${m[1]}</h3><ul>${m[4].map((x) => `<li>${x}</li>`).join("")}</ul>`;
+        $("#sd").innerHTML = M.map(
+          (_, j) => `<i class="${j == cur ? "on" : ""}"></i>`,
+        ).join("");
+        $("#cn").textContent = cur + 1 + "/8";
+      }
+      function ft() {
+        $("#tm").textContent =
+          String(Math.floor(T / 60)).padStart(2, "0") +
+          ":" +
+          String(T % 60).padStart(2, "0");
+      }
+      function tr(on) {
+        run = on;
+        clearInterval(iv);
+        if (on)
+          iv = setInterval(() => {
+            T = Math.max(0, T - 1);
+            ft();
+          }, 1000);
+        $("#pp").innerHTML = I(on ? "pause" : "play");
+      }
+      function mod(i) {
+        cm = i;
+        const m = M[i];
+        oo(
+          "top",
+          `0${i + 1} · ${m[1]}`,
+          `<p class="c">${m[4][0]}</p><div class="bt"><button class="bn" data-a="v">${I("play")}Ver en la presentación</button><button class="bn" data-a="s">Iniciar módulo</button><button class="bn" data-a="d">Marcar completado</button><button class="bn" data-a="n">${I("clip")}Tomar notas</button></div>`,
+        );
+      }
+      function res(i) {
+        if (i === 0 || i === 1) return marco(i);
+        const r = R[i],
+          p = pos || r[3];
+        oo(
+          p,
+          r[1],
+          `<p>${r[4]}</p><ul>${r[5].map((x) => `<li>${x}</li>`).join("")}</ul><p class="pos">Panel: ${{ top: "superior", bottom: "inferior", left: "izquierdo", right: "derecho" }[p]}</p>`,
+        );
+      }
+      $("#obd").onclick = (e) => {
+        const a = e.target.closest("[data-a]");
+        if (!a) return;
+        const k = a.dataset.a;
+        if (k == "v") {
+          cl();
+          sv("pres");
+          sd(cm);
+        }
+        if (k == "n") {
+          cl();
+          sv("not");
+        }
+        if (k == "s") {
+          S = S.map((s, i) =>
+            i == cm ? "En curso" : s == "En curso" ? "Pendiente" : s,
+          );
+          paint();
+          cl();
+        }
+        if (k == "d") {
+          if (S[cm] != "Completado") done = Math.min(8, done + 1);
+          S[cm] = "Completado";
+          paint();
+          cl();
+        }
+      };
+      document.body.addEventListener("click", (e) => {
+        const m = e.target.closest("[data-m]"),
+          r = e.target.closest("[data-r]"),
+          d = e.target.closest("[data-doc]"),
+          n = e.target.closest(".nv");
+        if (m) mod(+m.dataset.m);
+        if (r) res(+r.dataset.r);
+        if (d) {
+          const [k, j] = d.dataset.doc.split(":").map(Number);
+          docOpen(DOCS[k].items[j][1], DOCS[k].items[j][0]);
+        }
+        if (n) sv(n.dataset.v);
+      });
+      $("#tgl").onclick = $("#c1").onclick = () =>
+        document.body.classList.toggle("nosb");
+      $("#c2").onclick = () => {
+        done = 3;
+        S = M.map((_, i) => (i ? "Pendiente" : "En curso"));
+        paint();
+      };
+      $("#rp").onchange = (e) => (pos = e.target.value || null);
+      $("#vl").onclick = () => {
+        const l = $("#g2").classList.toggle("ls");
+        $("#vl em").textContent = l ? "Vista de tarjetas" : "Vista de lista";
+      };
+      $("#bell").onclick = () =>
+        oo(
+          "right",
+          "Notificaciones",
+          "<ul><li>Módulo 01 en curso.</li><li>Tiempo estimado total: 45 min.</li><li>Revisa la Guía de Presentación Final.</li></ul>",
+        );
+      function theme(t) {
+        document.documentElement.dataset.theme = t == "light" ? "light" : "";
+        $("#ts").value = t;
+      }
+      $("#th").onclick = () =>
+        theme(
+          document.documentElement.dataset.theme == "light" ? "dark" : "light",
+        );
+      $("#ts").onchange = (e) => theme(e.target.value);
+      $("#q").oninput = (e) => {
+        const v = e.target.value.toLowerCase();
+        if (v) sv("inicio");
+        $$(".mc,.rb").forEach((b) =>
+          b.classList.toggle(
+            "dim",
+            !!v && !b.textContent.toLowerCase().includes(v),
+          ),
+        );
+      };
+      try {
+        $("#nt").value = localStorage.getItem("nt") || "";
+      } catch (_) {}
+      $("#nt").oninput = (e) => {
+        try {
+          localStorage.setItem("nt", e.target.value);
+        } catch (_) {}
+      };
+      $("#nc").onclick = () => {
+        $("#nt").value = "";
+        try {
+          localStorage.removeItem("nt");
+        } catch (_) {}
+      };
+      const cv = $("#cv"),
+        x = cv.getContext("2d"),
+        las = $("#las");
+      let dr = 0,
+        lz = 0,
+        zs = 0;
+      const rs = () => {
+        if (cv.width != innerWidth || cv.height != innerHeight) {
+          cv.width = innerWidth;
+          cv.height = innerHeight;
+        }
+      };
+      rs();
+      addEventListener("resize", rs);
+      cv.onpointerdown = (e) => {
+        dr = 1;
+        x.beginPath();
+        x.moveTo(e.clientX, e.clientY);
+      };
+      cv.onpointermove = (e) => {
+        if (dr) {
+          x.lineTo(e.clientX, e.clientY);
+          x.strokeStyle = "#ff3b6b";
+          x.lineWidth = 4;
+          x.lineCap = "round";
+          x.stroke();
+        }
+      };
+      addEventListener("pointerup", () => (dr = 0));
+      addEventListener("pointermove", (e) => {
+        if (lz) {
+          las.style.left = e.clientX + "px";
+          las.style.top = e.clientY + "px";
+        }
+      });
+      const tog = (k, on) => $(`[data-t=${k}]`).classList.toggle("on", on);
+      function blk() {
+        $("#blk").classList.toggle("on");
+      }
+      $("#tb").onclick = (e) => {
+        const b = e.target.closest("[data-t]");
+        if (!b) return;
+        const k = b.dataset.t;
+        if (k == "prev" || k == "next") {
+          sv("pres");
+          sd(cur + (k == "next" ? 1 : -1));
+        }
+        if (k == "go") {
+          sv("pres");
+          sd(cur);
+        }
+        if (k == "pp") tr(!run);
+        if (k == "rst") {
+          T = 2700;
+          ft();
+        }
+        if (k == "start") {
+          sv("pres");
+          sd(0);
+          T = 2700;
+          ft();
+          tr(1);
+        }
+        if (k == "laser") {
+          lz = !lz;
+          las.style.display = lz ? "block" : "none";
+          tog(k, lz);
+        }
+        if (k == "pen") {
+          const o = cv.classList.toggle("on");
+          tog(k, o);
+        }
+        if (k == "clr") x.clearRect(0, 0, cv.width, cv.height);
+        if (k == "zoom") {
+          zs = (zs + 1) % 3;
+          $("#sl").style.setProperty("--sz", [20, 26, 32][zs] + "px");
+          sv("pres");
+          tog(k, zs > 0);
+        }
+        if (k == "blk") blk();
+        if (k == "full") {
+          try {
+            document.fullscreenElement
+              ? document.exitFullscreen()
+              : document.documentElement.requestFullscreen();
+          } catch (_) {}
+        }
+      };
+      $(".tools").addEventListener(
+        "click",
+        (e) => {
+          const b = e.target.closest("[data-t=prev],[data-t=next]");
+          if (b) e.stopPropagation();
+        },
+        true,
+      );
+      $$(".bn[data-t]").forEach(
+        (b) =>
+          (b.onclick = () => {
+            sd(cur + (b.dataset.t == "next" ? 1 : -1));
+          }),
+      );
+      addEventListener("keydown", (e) => {
+        if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+        if (e.key == "Escape") {
+          if (pbox.classList.contains("show")) docClose();
+          else cl();
+          $("#blk").classList.remove("on");
+        }
+        if (e.key == "b" || e.key == "B") blk();
+        if (oc.classList.contains("pr") && oc.classList.contains("show")) {
+          if (e.key == "ArrowRight") sd(1);
+          if (e.key == "ArrowLeft") sd(-1);
+        }
+      });
+      if (innerWidth < 900) document.body.classList.add("nosb");
+      let ps = 0;
+      function rp() {
+        const m = M[cm],
+          n = m[4].length + 1,
+          dn = S[cm] == "Completado",
+          x = m[4][ps - 1];
+        S = S.map((s, j) =>
+          j == cm
+            ? s == "Completado"
+              ? s
+              : "En curso"
+            : s == "En curso"
+              ? "Pendiente"
+              : s,
+        );
+        paint();
+        $("#ot").textContent = `0${cm + 1} · ${m[1]}`;
+        const o = $("#obd");
+        o.className = "ob pm";
+        o.style.setProperty("--acc", (ps && x && x.acc) || m[3]);
+        o.innerHTML =
+          (ps
+            ? x && x.h
+              ? `<div class="sl0 rich" style="max-width:1280px"><small>${m[1]} · ${ps}/${n - 1}</small><h3 class="bl">${x.t}</h3><div class="slc" style="--acc:${x.acc || m[3]}">${x.h}</div></div>`
+              : `<div class="sl0"><small>Punto ${ps} de ${n - 1}</small><h3 class="bl">${x}</h3></div>`
+            : `<div class="sl0"><span style="color:${m[3]};font-size:84px;display:flex">${I(m[0])}</span><h3>${m[1]}</h3><p>Módulo 0${cm + 1} de 08 · ${m[2]} min</p></div>`) +
+          `<div class="dots">${Array.from({ length: n }, (_, j) => `<i class="${j == ps ? "on" : ""}"></i>`).join("")}</div><div class="bt"><button class="bn" data-a="p">${I("chev", "fl")}Anterior</button><button class="bn" data-a="x">Siguiente${I("chev")}</button><button class="bn" data-a="d">${dn ? "Completado ✓" : "Marcar completado"}</button><button class="bn" data-a="n">${I("clip")}Tomar notas</button></div>`;
+        $$("#obd .fl").forEach((e) => (e.style.transform = "scaleX(-1)"));
+      }
+      function mod(i) {
+        cm = i;
+        ps = 0;
+        oo("top pr", "", "");
+        rp();
+      }
+      function sd(d) {
+        const n = M[cm][4].length + 1;
+        ps += d;
+        if (ps < 0) {
+          if (cm) {
+            cm--;
+            ps = M[cm][4].length;
+          } else ps = 0;
+        } else if (ps >= n) {
+          if (cm < 7) {
+            cm++;
+            ps = 0;
+          } else ps = n - 1;
+        }
+        rp();
+      }
+      $("#obd").onclick = (e) => {
+        const a = e.target.closest("[data-a]");
+        if (!a) return;
+        const k = a.dataset.a;
+        if (k == "p") sd(-1);
+        if (k == "x") sd(1);
+        if (k == "n") {
+          cl();
+          sv("not");
+        }
+        if (k == "d") {
+          if (S[cm] != "Completado") done = Math.min(8, done + 1);
+          S[cm] = "Completado";
+          paint();
+          rp();
+        }
+      };
+      $("#v-pres").innerHTML =
+        `<div class="card vw pl"><h2>Presentación</h2><p style="color:var(--mut);max-width:520px">Recorre los 8 módulos en modo presentación. También puedes tocar cualquier tarjeta de módulo en Inicio. Usa ← → para avanzar.</p><button class="bn" id="ip">${I("play")}Iniciar presentación</button></div>`;
+      $("#ip").onclick = () => mod(0);
+      const tb = $("#tb");
+      tb.innerHTML =
+        `<button class="tl gr" data-t="mv" title="Arrastrar la barra" aria-label="Mover la barra">${I("list")}</button>` +
+        [
+          ["laser", "target", "Láser"],
+          ["pen", "pen", "Lápiz"],
+          ["clr", "trash", "Borrar"],
+          ["zoom", "zoom", "Zoom"],
+          ["blk", "mon", "Negro"],
+          ["full", "full", "Completa"],
+        ]
+          .map(
+            (t) =>
+              `<button class="tl" data-t="${t[0]}">${I(t[1])}${t[2]}</button>`,
+          )
+          .join("");
+      tb.onclick = (e) => {
+        const b = e.target.closest("[data-t]");
+        if (!b) return;
+        const k = b.dataset.t;
+        if (k == "laser") {
+          lz = !lz;
+          las.style.display = lz ? "block" : "none";
+          document.body.classList.toggle("lz", lz);
+          tog(k, lz);
+        }
+        if (k == "pen") tog(k, cv.classList.toggle("on"));
+        if (k == "clr") x.clearRect(0, 0, cv.width, cv.height);
+        if (k == "zoom") {
+          zs = (zs + 1) % 3;
+          document.documentElement.style.setProperty(
+            "--sz",
+            [26, 32, 38][zs] + "px",
+          );
+          tog(k, zs > 0);
+        }
+        if (k == "blk") blk();
+        if (k == "full") {
+          try {
+            document.fullscreenElement
+              ? document.exitFullscreen()
+              : document.documentElement.requestFullscreen();
+          } catch (_) {}
+        }
+      };
+      tb.onpointerdown = (e) => {
+        if (!e.target.closest(".gr")) return;
+        const r = tb.getBoundingClientRect(),
+          dx = e.clientX - r.left,
+          dy = e.clientY - r.top;
+        tb.setPointerCapture(e.pointerId);
+        tb.onpointermove = (m) => {
+          tb.style.transform = "none";
+          tb.style.bottom = "auto";
+          tb.style.left =
+            Math.max(0, Math.min(innerWidth - r.width, m.clientX - dx)) + "px";
+          tb.style.top =
+            Math.max(0, Math.min(innerHeight - r.height, m.clientY - dy)) +
+            "px";
+        };
+        tb.onpointerup = () => (tb.onpointermove = null);
+      };
+      addEventListener("dblclick", (e) => {
+        if (!lz || e.target.closest("#tb")) return;
+        const f = document.createElement("i");
+        f.className = "fx";
+        f.style.left = e.clientX + "px";
+        f.style.top = e.clientY + "px";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 800);
+      });
+      ins();
+      paint();
+    </script>
+  </body>
+</html>
